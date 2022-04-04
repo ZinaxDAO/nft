@@ -1,0 +1,190 @@
+.usecases{
+    padding: 7%;
+    background-image: url("../../assets/images/introbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.usecases-intro{
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.usecases-intro-mobile{
+    display: none;
+}
+
+.usecases-intro h3{
+    font-size: 2rem;
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+.clicked-nft{
+    display: flex;
+    align-items: center;
+}
+
+.clicked-nft div{
+    width: 50%;
+}
+
+.nft-image img{
+    width: 80%;
+    object-fit: contain;
+    animation: rotatenft 9s linear infinite;
+}
+
+@keyframes rotatenft {
+    0%{
+        transform: rotateY(45deg);
+    }
+
+    25%{
+        transform: rotateY(0);
+    }
+
+    50%{
+        transform: rotateY(-90deg);
+    }
+
+    75%{
+        transform: rotateY(0);
+    }
+
+    100%{
+        transform: rotateY(45deg);
+    }
+}
+
+.nft-details h4{
+    font-size: 1.8rem;
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.nft-details div{
+    display: flex;
+    color: #fff;
+    margin-bottom: .3rem;
+    width: 80%;
+}
+
+.nft-details div p{
+    width: 50%;
+    font-size: 1.2rem;
+}
+
+.usecase-btn{
+    width: 12rem;
+    height: 3rem;
+    color: #fff;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid #CB037B;
+    box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.usecase-btn:hover{
+    transform: scale(1.05);
+    transition: ease-in-out 1s;
+}
+
+.carousel{
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.carousel-item{
+    text-align: center;
+}
+
+.carousel img{
+    width: 70%;
+    height: 20rem;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .usecases{
+        padding-top: 10%;
+        padding-bottom: 10%;
+    }
+    .usecases-intro-mobile{
+        display: block;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .usecases-intro{
+        display: none;
+    }
+
+    .usecases-intro-mobile h3{
+        font-size: 1.5rem;
+        background: -webkit-linear-gradient(#FF9900, #CB037B);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .clicked-nft{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px) {
+    .usecases{
+        padding-top: 10%;
+        padding-bottom: 10%;
+    }
+    .usecases-intro-mobile{
+        display: block;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .usecases-intro{
+        display: none;
+    }
+
+    .usecases-intro-mobile h3{
+        font-size: 1.5rem;
+        background: -webkit-linear-gradient(#FF9900, #CB037B);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    .clicked-nft{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .usecases-intro h3{
+        font-size: 1.8rem;
+    }
+
+    .nft-details h4{
+        font-size: 1.5rem;
+    }
+    
+    .nft-details div p{
+        font-size: 1rem;
+    }
+}

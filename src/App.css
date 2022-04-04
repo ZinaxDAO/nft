@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,700;1,500&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.react-loading{
+  background-image: url("./assets/images/introbg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-loading h4{
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.react-loading h4>span{
+  background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

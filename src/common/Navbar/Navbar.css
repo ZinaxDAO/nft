@@ -1,0 +1,156 @@
+.header{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 2% 7%;
+    z-index: 99;
+    position: sticky;
+    top: 0;
+    background-image: url("../../assets/images/introbg.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+}
+
+.navbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo img{
+    width: 70%;
+    object-fit: contain;
+}
+
+.nav-links ul{
+    display: flex;
+    align-items: center;
+}
+
+.nav-link{
+    margin-left: 30px;
+    list-style-type: none;
+}
+
+.nav-link a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.nav-btn{
+    width: 7rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #CB037B;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.nav-btn img{
+    width: 55%;
+    margin-left: 10px;
+}
+
+.nav-toggle{
+    display: none;
+}
+
+
+/************************* RESPONSIVE LAYOUT ***********************/
+@media screen and (max-width: 700px) {
+    .nav-toggle{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .nav-toggle .bar{
+        position: relative;
+        width: 25px;
+        height: 2px;
+        background: #fff;
+    }
+
+    .nav-toggle .bar::before, .nav-toggle .bar::after{
+        content: "";
+        position: absolute;
+        height: 2px;
+        background: #fff;
+        transition: all 0.45s ease-in-out;
+    }
+
+    .nav-toggle .bar::before{
+        width: 18px;
+        transform: translateY(-8px);
+        right: 0;
+    }
+
+    .nav-toggle .bar::after{
+        width: 32px;
+        transform: translateY(8px);
+        right: 0;
+    }
+
+    .nav-toggle.open > .bar{
+        transform: translateX(-4px);
+        background: transparent;
+    }
+
+    .nav-toggle.open > .bar::before{
+        width: 32px;
+        transform: rotate(45deg);
+        transform: translate(50px -26px); 
+    }
+
+    .nav-toggle.open > .bar::after{
+        transform: rotate(-45deg);
+        transform: translate(26px 26px);
+    }
+
+    .nav-links{
+        position: absolute;
+        border: none;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        transform: translateY(-200%);
+        transition: all 1s ease-in-out;
+        background-image: url("../../assets/images/introbg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .nav-links.open{
+        transform: translateY(0);
+    }
+
+    .nav-links ul{
+        flex-direction: column;
+    }
+
+    .nav-links ul::before{
+        background: transparent
+    }
+
+    .nav-link{
+        margin: 2rem 0 1rem;
+    }
+
+    .nav-link a{
+        font-size: 1rem;
+    }
+}

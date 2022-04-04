@@ -1,0 +1,9 @@
+.carousel{
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.carousel img{
+    width: 70%;
+    cursor: pointer;
+}

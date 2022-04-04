@@ -1,0 +1,216 @@
+.team{
+    padding: 10% 5%;
+    background-image: url("../../assets/images/introbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.team h3{
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5rem;
+}
+
+.team-members{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.member{
+    text-align: center;
+    cursor: pointer;
+}
+
+.member-content img{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.member-content, .about-member{
+    width: 11rem;
+    height: 11rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.about-member{
+    flex-direction: column;
+}
+
+.about-member p{
+    color: #fff;
+    font-weight: 600;
+}
+
+.about-member.two p, .about-member.four p{
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+.about-member.two img, .about-member.four img{
+    background: linear-gradient(#FF9900, #CB037B)
+}
+
+.member-links{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.member-links img{
+    width: 50%;
+    object-fit: contain;
+}
+
+.member>div.one, .member>div.three{
+    background: linear-gradient(#FF9900, #CB037B)
+}
+
+.member>div.two, .member>div.four {
+    background: #fff;
+}
+
+.member-name{
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+.diamondthree{
+    position: absolute;
+    width: 80px;
+    object-fit: contain;
+    top: 15%;
+    right: 36%;
+    animation: moveShapes 5s linear infinite;
+}
+
+@keyframes moveShapes {
+    0%{
+        transform: translateY(0)
+    }
+
+    25%{
+        transform: translateY(10px);
+    }
+
+    50%{
+        transform: translateY(0)
+    }
+
+    75%{
+        transform: translateY(-10px);
+    }
+
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.cubes-four{
+    position: absolute;
+    width: 150px;
+    object-fit: contain;
+    bottom: -9%;
+    z-index: 2;
+    animation: moveShapes 5s linear infinite;
+}
+
+
+
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .team-members{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .member{
+        margin-bottom: 3rem;
+    }
+
+    .member-content{
+        margin-bottom: 1rem;
+    }
+
+    .diamondthree{
+        width: 80px;
+        top: 6%;
+        right: 10%;
+    }
+
+    .cubes-four{
+        width: 130px;
+        bottom: -5%;
+    }
+
+ 
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px) {
+    .team-members{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .member{
+        margin-bottom: 3rem;
+    }
+
+    .member-content{
+        margin-bottom: 1rem;
+    }
+
+    .diamondthree{
+        width: 80px;
+        top: 6%;
+        right: 10%;
+    }
+
+    .cubes-four{
+        width: 130px;
+        bottom: -5%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .team-members {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .member{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+
+    .member-content{
+        margin-bottom: 1rem;
+    }
+
+    .member-content img{
+        text-align: center;
+    }
+}

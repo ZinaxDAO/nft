@@ -1,0 +1,163 @@
+.dashboard-intro{
+    margin-top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2% 9%;
+}
+
+.dashboard-intro .intro-img{
+    flex: 1;
+}
+
+.dashboard-intro .intro-text{
+    flex: 5;
+    text-align: right;
+}
+
+.dashboard-intro .intro-image img{
+    width: 70%;
+    animation: rotatenft 9s linear infinite;
+}
+
+@keyframes rotatenft {
+    0%{
+        transform: rotateY(45deg);
+    }
+
+    25%{
+        transform: rotateY(0);
+    }
+
+    50%{
+        transform: rotateY(-90deg);
+    }
+
+    75%{
+        transform: rotateY(0);
+    }
+
+    100%{
+        transform: rotateY(45deg);
+    }
+}
+
+.intro-bg-2{
+    position: absolute;
+    width: 700px;
+    object-fit: contain;
+    top: 30%;
+    right: 0;
+    z-index: 1;
+}
+
+.diamond-one{
+    position: absolute;
+    width: 100px;
+    object-fit: contain;
+    top: 12%;
+    left: 23%;
+}
+
+.cubes{
+    position: absolute;
+    width: 250px;
+    object-fit: contain;
+    left: 2%;
+    top: 52%;
+    animation: moveCubes 4s linear infinite;
+}
+
+@keyframes moveCubes {
+    0%{
+        transform: translateX(0)
+    }
+
+    25%{
+        transform: translateX(10px);
+    }
+
+    50%{
+        transform: translateX(0)
+    }
+
+    75%{
+        transform: translateX(-10px);
+    }
+
+    100%{
+        transform: translateX(0);
+    }
+}
+
+.cubes-two{
+    display:none;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2){
+    width: 25rem;
+    height: 12rem;
+    background: linear-gradient(11.19deg, #5B417D -31.12%, rgba(80, 14, 111, 0.994639) 18.92%, rgba(48, 11, 78, 0.99) 111.28%);
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 37px;
+    margin-top: 2rem;
+    padding: 10px 30px;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2) .ref-bonus{
+    color: #FF9900;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:first-child{
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:first-child>div{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:nth-child(2){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:nth-child(2)>div:first-child{
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:nth-child(2)>div:first-child h5{
+    font-size: 1.3rem;
+    margin-bottom: 0;
+}
+
+.intro-text>div:nth-child(2)>div:nth-child(2)>div:first-child p{
+    font-size: 1rem;
+    margin-top: 0;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:nth-child(2)>div:nth-child(2){
+    width: 6.1rem;
+    height: 6.1rem;
+    border-radius: 50%;
+    border: 1px solid #FF9900;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-intro .intro-text>div:nth-child(2)>div:nth-child(2)>div:nth-child(2) .circleoutlineicon{
+    font-size: 6rem;
+}

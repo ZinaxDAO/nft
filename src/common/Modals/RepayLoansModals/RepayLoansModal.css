@@ -1,0 +1,45 @@
+.repayLoansModal{
+    text-align: center;
+}
+
+.repayLoansModalTitle{
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.repayLoansModalContent{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.repayLoansModalContent div img{
+    width: 80%;
+}
+
+.repayLoansModalContent>div:nth-child(2)>div{
+    width: 15rem;
+    height: 2.5rem;
+    border-radius: 18px;
+    border: 1px solid #FF9900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.repayLoansModalContent button{
+    width: 10rem;
+    height: 2.5rem;
+    background: #6CBA74;
+    border-radius: 22px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}

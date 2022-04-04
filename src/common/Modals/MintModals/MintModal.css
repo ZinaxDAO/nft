@@ -1,0 +1,45 @@
+.mintModal{
+    text-align: center;
+}
+
+.mintModalTitle{
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.mintModalContent{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mintModalContent div img{
+    width: 80%;
+}
+
+.mintModalContent>div:nth-child(2)>div{
+    width: 15rem;
+    height: 2.5rem;
+    border-radius: 18px;
+    border: 1px solid #FF9900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.mintModalContent button{
+    width: 10rem;
+    height: 2.5rem;
+    background: linear-gradient(86.52deg, #FF9900 4%, #CB037B 83%);
+    border-radius: 25px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}

@@ -1,0 +1,369 @@
+.currency{
+    background-image: url("../../assets/images/introbg.jpg");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 7%;
+    position: relative;
+}
+
+.currency-heading{
+    text-align: center;
+}
+
+.currency-heading-two{
+    display: none;
+    text-align: center;
+}
+
+.currency-heading h3{
+    font-size: 2rem;
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.currency-heading p{
+    color: #fff;
+}
+
+.currency-content{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin-top: 6rem;
+}
+
+.currency-card{
+    text-align: center;
+    width: 25%;
+}
+
+.currency-card:hover{
+    transform: scale(1.1);
+    transition: ease-in-out 1s;
+}
+
+.currency-card-img img{
+    width: 75px;
+    object-fit: contain;
+}
+
+.currency-card-heading{
+    margin: 1.5rem 0;
+    background: -webkit-linear-gradient(#FF9900, #CB037B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+}
+
+.currency-card-content{
+    color: #fff;
+    font-size: .9rem;
+}
+
+.diamond-two{
+    position: absolute;
+    top: 15%;
+    width: 80px;
+    object-fit: contain;
+    animation: moveDiamondTwo 5s linear infinite;
+}
+
+@keyframes moveDiamondTwo {
+    0%{
+        transform: translateY(0)
+    }
+
+    25%{
+        transform: translateY(10px);
+    }
+
+    50%{
+        transform: translateY(0)
+    }
+
+    75%{
+        transform: translateY(-10px);
+    }
+
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.diamond-three, .star-one, .star-two, .cubes-three{
+    display: none;
+}
+
+
+
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .currency{
+        padding: 7% 4%;
+    }
+
+    .currency-heading{
+        display: none;
+    }
+    
+    .currency-heading-two{
+        display: block;
+        margin-top: 4rem;
+    }
+
+    .currency-heading-two p{
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .currency-content{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6rem;
+    }
+
+    .currency-card{
+        width: 80%;
+        margin-bottom: 3rem;
+    }
+
+    .currency-card:hover{
+        transform: scale(1);
+    }
+
+    .currency-card-img img{
+        width: 65px;
+    }
+
+    .diamond-three, .star-one, .star-two, .cubes-three{
+        display: block;
+        position: absolute;
+        animation: moveShapes 5s linear infinite;
+    }
+
+    @keyframes moveShapes {
+        0%{
+            transform: translateY(0)
+        }
+    
+        25%{
+            transform: translateY(10px);
+        }
+    
+        50%{
+            transform: translateY(0)
+        }
+    
+        75%{
+            transform: translateY(-10px);
+        }
+    
+        100%{
+            transform: translateY(0);
+        }
+    }
+
+    .star-one{
+        top: 8%;
+        left: 19%;
+    }
+
+    .star-two{
+        top: 14%;
+        right: 25%;
+    }
+
+    .diamond-two{
+        width: 65px;
+        top: 75%;
+        right: 0;
+    }
+
+    .diamond-three{
+        top: 50%;
+        left: 0;
+    }
+
+    .cubes-three{
+        top: 30%;
+        right: 0;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px) {
+    .currency{
+        padding: 7% 4%;
+    }
+
+    .currency-heading{
+        display: none;
+    }
+    
+    .currency-heading-two{
+        display: block;
+        margin-top: 4rem;
+    }
+
+    .currency-heading-two p{
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .currency-content{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6rem;
+    }
+
+    .currency-card{
+        width: 80%;
+        margin-bottom: 3rem;
+    }
+
+    .currency-card:hover{
+        transform: scale(1);
+    }
+
+    .currency-card-img img{
+        width: 65px;
+    }
+
+    .diamond-three, .star-one, .star-two, .cubes-three{
+        display: block;
+        position: absolute;
+        animation: moveShapes 5s linear infinite;
+    }
+
+    @keyframes moveShapes {
+        0%{
+            transform: translateY(0)
+        }
+    
+        25%{
+            transform: translateY(10px);
+        }
+    
+        50%{
+            transform: translateY(0)
+        }
+    
+        75%{
+            transform: translateY(-10px);
+        }
+    
+        100%{
+            transform: translateY(0);
+        }
+    }
+
+    .star-one{
+        top: 8%;
+        left: 19%;
+    }
+
+    .star-two{
+        top: 14%;
+        right: 25%;
+    }
+
+    .diamond-two{
+        width: 65px;
+        top: 75%;
+        right: 0;
+    }
+
+    .diamond-three{
+        top: 50%;
+        left: 0;
+    }
+
+    .cubes-three{
+        top: 30%;
+        right: 0;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .currency-content{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6rem;
+    }
+
+    .currency-card{
+        width: 60%;
+        margin-bottom: 3rem;
+    }
+
+    .currency-card:hover{
+        transform: scale(1);
+    }
+
+    .currency-card-img img{
+        width: 65px;
+    }
+
+    .diamond-three, .star-one, .star-two, .cubes-three{
+        display: block;
+        position: absolute;
+        animation: moveShapes 5s linear infinite;
+    }
+
+    @keyframes moveShapes {
+        0%{
+            transform: translateY(0)
+        }
+    
+        25%{
+            transform: translateY(10px);
+        }
+    
+        50%{
+            transform: translateY(0)
+        }
+    
+        75%{
+            transform: translateY(-10px);
+        }
+    
+        100%{
+            transform: translateY(0);
+        }
+    }
+
+    .star-one{
+        top: 8%;
+        left: 19%;
+    }
+
+    .star-two{
+        top: 14%;
+        right: 25%;
+    }
+
+    .diamond-two{
+        width: 65px;
+        top: 75%;
+        right: 0;
+    }
+
+    .diamond-three{
+        top: 50%;
+        left: 0;
+    }
+
+    .cubes-three{
+        top: 30%;
+        right: 0;
+    }
+}

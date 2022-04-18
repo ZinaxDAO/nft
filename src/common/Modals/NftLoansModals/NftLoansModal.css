@@ -1,25 +1,25 @@
-.repayLoansModal{
+.nftLoansModal{
     text-align: center;
 }
 
-.repayLoansModalTitle{
+.nftLoansModalTitle{
     margin-bottom: 3rem;
     font-weight: 700;
     font-size: 1.5rem;
     color: #fff;
 }
 
-.repayLoansModalContent{
+.nftLoansModalContent{
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.repayLoansModalContent div img{
+.nftLoansModalContent div img{
     width: 80%;
 }
 
-.repayLoansModalContent>div:nth-child(2)>div{
+.nftLoansModalContent>div:nth-child(2)>div{
     width: 15rem;
     height: 2.5rem;
     border-radius: 18px;
@@ -33,10 +33,10 @@
     cursor: pointer;
 }
 
-.repayLoansModalContent button{
+.nftLoansModalContent button{
     width: 10rem;
     height: 2.5rem;
-    background: #6CBA74;
+    background: linear-gradient(86.52deg, #FF9900 4%, #CB037B 83%);
     border-radius: 22px;
     color: #fff;
     border: none;
@@ -49,20 +49,20 @@
 /***** Responsive Layout **********/
 /**********************************/
 @media screen and (max-width: 450px) {
-    .repayLoansModalContent{
+    .nftLoansModalContent{
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    .repayLoansModalContent div:first-child{
+    .nftLoansModalContent div:first-child{
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 2rem;
     }
 
-    .repayLoansModalContent>div:nth-child(2){
+    .nftLoansModalContent>div:nth-child(2){
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -70,7 +70,7 @@
         align-items: center;
     }
 
-    .repayLoansModalContent>div:nth-child(2)>div{
+    .nftLoansModalContent>div:nth-child(2)>div{
         width: 80%;
     }
 }

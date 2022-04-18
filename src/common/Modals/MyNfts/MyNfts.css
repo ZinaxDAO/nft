@@ -1,0 +1,138 @@
+.mynfts{
+    padding: 2rem 4rem;
+    height: fit-content;
+    background: #250843;
+    border-radius: 0 0 69px 69px;
+}
+
+.mynfts .close-icon{
+    display: none;
+}
+
+.mynfts h3{
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.mynfts hr{
+    border: 2px solid #FF9900;
+
+}
+
+.mynfts .nft-collections{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nft-collections>div{
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+.nft-collections>div img{
+    width: 60%;
+}
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .mynfts{
+        position: absolute;
+        top: 27%;
+        height: fit-content;
+        z-index: 3;
+    }
+
+    .mynfts .close-icon{
+        display: block;
+        position: absolute;
+        color: #fff;
+        top: 0;
+        right: 5%;
+    }
+
+    .mynfts .nft-collections{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
+    }
+
+    .nft-collections>div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px){
+    .mynfts{
+        position: absolute;
+        top: 27%;
+        height: fit-content;
+        z-index: 3;
+        width: 90%;
+    }
+
+    .mynfts .close-icon{
+        display: block;
+        position: absolute;
+        color: #fff;
+        top: 0;
+        right: 5%;
+    }
+
+    .mynfts .nft-collections{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
+    }
+
+    .nft-collections>div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px){
+    .mynfts{
+        position: absolute;
+        top: 27%;
+        height: fit-content;
+        z-index: 3;
+        width: 90%;
+    }
+
+    .mynfts .close-icon{
+        display: block;
+        position: absolute;
+        color: #fff;
+        top: 0;
+        right: 5%;
+    }
+
+    .mynfts .nft-collections{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .nft-collections>div{
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nft-collections>div img{
+        width: 1005;
+    }
+}

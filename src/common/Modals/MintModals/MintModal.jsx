@@ -1,5 +1,6 @@
 import React from "react";
 import "./MintModal.css";
+import "../NftModals/NftModals.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import nfts from "./../../nfts/nfts";
 import Slider from "react-slick";

@@ -60,7 +60,7 @@ const Team = () => {
               </div>
             </div>
           )}
-          <p className="member-name">DefiDruid</p>
+          <p className="member-name">Akay</p>
         </div>
 
         <div className="member" onClick={() => setMemberThree(!memberThree)}>

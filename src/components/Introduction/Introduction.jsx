@@ -6,6 +6,7 @@ import IntroBg2 from "../../assets/images/introbg2.png";
 import DiamondOne from "../../assets/images/diamond-one.png";
 import Cubes from "../../assets/images/cubes.png";
 import CubesTwo from "../../assets/images/cubes-two.png";
+import { Link } from "react-router-dom";
 
 const Introduction = () => {
   return (
@@ -22,9 +23,9 @@ const Introduction = () => {
             Utility <span>Zinar NFTs </span>
           </h3>
           <p>The First Metaverse NFT backed with gold</p>
-          <a href="/">
+          <Link to="/dashboard">
             <button className="intro-btn">Mint Zinar</button>
-          </a>
+          </Link>
         </div>
 
         <div className="intro-text-2">
@@ -33,7 +34,7 @@ const Introduction = () => {
           <h3>
             <span>Zinar NFTs </span>
           </h3>
-          <a href="/">
+          <a href="/dashboard">
             <button className="intro-btn">Mint Zinar</button>
           </a>
           <p>The First Metaverse NFT </p> <p> backed with gold</p>

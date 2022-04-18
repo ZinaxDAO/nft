@@ -8,12 +8,18 @@
 }
 
 .dashboard-menus{
-    height: 16rem;
+    height: fit-content;
     background: #250843;
     border-radius: 69px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem 0;
+    position: relative;
+}
+
+.dashboard-menus-onclick-style{
+    border-radius: 69px 69px 0 0;
 }
 
 .dashboard-menus div{
@@ -61,4 +67,119 @@
 
 .dashboard-menus>div:last-child{
     background: #fff;
+}
+
+
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .dashboard-menu-section{
+        padding: 10% 4%;
+        width: 100%;
+        background: #250843;
+    }
+
+    .dashboard-menus{
+        height: fit-content;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem 0 2rem;
+        border-radius: 0 0 27px 27px;
+    }
+
+    .dashboard-menus div{
+        width: 80%;
+        height: 4rem;
+        margin: 1rem 0;
+        border-radius: 12px;
+    }
+
+    .dashboard-menus div>p{
+        font-size: 1rem;
+    }
+
+    .dashboard-menus div>div{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 767px) {
+    .dashboard-menu-section{
+        padding: 10% 4%;
+        width: 100%;
+        background: #250843;
+    }
+
+    .dashboard-menus{
+        height: fit-content;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem 0 2rem;
+        border-radius: 0 0 27px 27px;
+    }
+
+    .dashboard-menus div{
+        width: 80%;
+        height: 4rem;
+        margin: 1rem 0;
+        border-radius: 12px;
+    }
+
+    .dashboard-menus div>p{
+        font-size: 1rem;
+    }
+
+    .dashboard-menus div>div{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .dashboard-menu-section{
+        padding: 10% 4%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-menus{
+        height: fit-content;
+        flex-direction: column;
+        width: 80%;
+        padding: 1rem 0 2rem;
+        border-radius: 0 0 27px 27px;
+    }
+
+    .dashboard-menus div{
+        width: 80%;
+        height: 6rem;
+        margin: 2rem 0;
+        border-radius: 12px;
+    }
+
+    .dashboard-menus div>div{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1100px) {
+    .dashboard-menu-section{
+        padding: 10% 5%;
+    }
+
+    .dashboard-menus div{
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .dashboard-menus div>p{
+        font-size: 1rem;
+    }
+
+    .dashboard-menus div>div{
+        display: none;
+    }
 }

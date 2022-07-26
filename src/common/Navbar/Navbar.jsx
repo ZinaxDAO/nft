@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
+import { useMoralis } from "react-moralis";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+  const { authenticate, isAuthenticated, isAuthenticating, authError, user } = useMoralis();
+  const [account, setAccount] = useState('');
 
+  const [open, setOpen] = useState(false);
   return (
     <header className="header">
       <nav className="navbar">
@@ -34,14 +37,12 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-              <a href="/">
-                <button className="nav-btn">
-                  Connect
+                <button className="nav-btn" onClick={() => authenticate()}>
+                  {isAuthenticated ? <p> User </p> : <p>Connect</p>}
                   <span>
                     <img src={ConnectImg} alt="connect" />
                   </span>
                 </button>
-              </a>
             </li>
           </ul>
         </div>

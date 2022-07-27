@@ -34,6 +34,11 @@ const MyNfts = (props) => {
     }
   }
 
+  useEffect(() => {
+    fetchNFTsForContract();
+  }, []);
+
+
   return (
     <div className="mynfts">
       <h3>MY NFTs</h3>
@@ -43,11 +48,11 @@ const MyNfts = (props) => {
       />
       <hr />
       <div className="nft-collections">
-        {zinarnfts.length > 0 ? (
-          zinarnfts.map((nft) =>)
+        {zinarnfts ? (
+          zinarnfts.map((nft) => <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>)
           ) : (
           <h3 className='dark:text-gray-400 mx-2'>
-            No Result found. Try "apes"
+            No NFTs minted yet
           </h3>
         )}
       </div>

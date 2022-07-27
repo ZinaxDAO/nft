@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./MyNfts.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import nfts from "../../nfts/nfts";
 import { useMoralisWeb3Api } from "react-moralis";
 
 const MyNfts = (props) => {
@@ -44,7 +43,6 @@ const MyNfts = (props) => {
       <h3>MY NFTs</h3>
       <CancelOutlinedIcon
         className="close-icon"
-        onClick={() => fetchNFTsForContract()}
       />
       <hr />
       <div className="nft-collections">

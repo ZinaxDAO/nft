@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./DashboardIntro.css";
 import IntroImg from "../../../assets/images/introImg.png";
 import IntroBg2 from "../../../assets/images/introbg2.png";
@@ -7,8 +7,30 @@ import Cubes from "../../../assets/images/cubes.png";
 import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { useMoralisWeb3Api, useMoralis } from "react-moralis";
 
 const DashboardIntro = () => {
+  const Web3Api = useMoralisWeb3Api();
+  const { Moralis } = useMoralis();
+  const [balance, setBalance] = useState();
+  const currentUser = Moralis.User.current();
+
+  const fetchNativeBalance = async () => {
+    // get BSC native balance for a given address
+    const options = {
+      chain: "mumbai"
+    };
+    const BNbalance = await Web3Api.Web3API.account.getNativeBalance(options);
+    const balance = Moralis.Units.FromWei(BNbalance.balance);
+    console.log(balance);
+    const finalBalance = Number(balance).toFixed(3);
+    setBalance(finalBalance);
+  };
+
+  useEffect(() => {
+    fetchNativeBalance();
+  }, []);
+
   return (
     <div className="dashboard-intro">
       <div className="intro-image">
@@ -33,7 +55,7 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              <h5>Wallet Balance</h5>
+              <h5>{balance}</h5>
               <p>Wallet Address</p>
             </div>
             <div>

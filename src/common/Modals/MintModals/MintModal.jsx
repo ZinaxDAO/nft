@@ -110,8 +110,6 @@ const MintModal = (props) => {
 
 } 
 
-
-
   const mintZinarNft = async () => {
 
 		//const mintPrice = '0.5';

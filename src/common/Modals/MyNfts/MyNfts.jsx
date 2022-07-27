@@ -43,6 +43,7 @@ const MyNfts = (props) => {
       <h3>MY NFTs</h3>
       <CancelOutlinedIcon
         className="close-icon"
+        onClick={() => setShowMyNfts(false)}
       />
       <hr />
       <div className="nft-collections">

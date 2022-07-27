@@ -13,7 +13,6 @@ const MintModal = (props) => {
   const CONTRACT_ADDRESS = '0x94ea4e253891240715E089E7E98Eef82258141BC';
   const { setMintModal } = props;
   const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState("");
   const [totalPrice, setTotalPrice] = useState("");
 
   const settings = {

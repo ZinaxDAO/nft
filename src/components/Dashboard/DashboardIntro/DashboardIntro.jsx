@@ -11,9 +11,9 @@ import { useMoralisWeb3Api, useMoralis } from "react-moralis";
 
 const DashboardIntro = () => {
   const Web3Api = useMoralisWeb3Api();
-  const { Moralis } = useMoralis();
+  const { Moralis, isAuthenticated, user } = useMoralis();
   const [balance, setBalance] = useState();
-  const currentUser = Moralis.User.current();
+  const [address, setAddress] = useState('');
 
   const fetchNativeBalance = async () => {
     // get BSC native balance for a given address
@@ -30,6 +30,12 @@ const DashboardIntro = () => {
   useEffect(() => {
     fetchNativeBalance();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setAddress(user.attributes.ethAddress);
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="dashboard-intro">
@@ -55,8 +61,8 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              <h5>{balance}</h5>
-              <p>Wallet Address</p>
+              <h5>{balance} MATIC</h5>
+              <p>{address.slice(0,5)}...{address.slice(-6)}</p>
             </div>
             <div>
               <AccountCircleOutlinedIcon

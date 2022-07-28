@@ -93,20 +93,6 @@ const MintModal = (props) => {
           alert("Transaction failed! Please try again");
         }
     }
-  
-  
- 
-  /*
-  const receipt = await mintTx.wait(); // wait for the transaction to be mined
-
-  // if the contract is mined successfully, do the following:
-  if (receipt.status === 1) {
-    alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
-    
-  } else {
-    alert("Transaction failed! Please try again");
-  }
-  */
 
 } 
 
@@ -124,13 +110,14 @@ const MintModal = (props) => {
 			console.log('Accessing wallet to pay gas');
 
       let mintTx;
+      let nftName;
       nfts.map(async(nft) => {
-        const nftName = nft.name;
-       await chooseNft(nftName,contract)
+        nftName = nft.name;
       })
-	}catch(error){
-    console.log(error);
-  }
+      await chooseNft(nftName,contract);
+    }catch(error){
+      console.log(error);
+    }
   }
   return (
     <div className="modalBackground">

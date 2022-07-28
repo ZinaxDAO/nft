@@ -61,8 +61,8 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              <h5>{balance} MATIC</h5>
-              <p>{address.slice(0,5)}...{address.slice(-6)}</p>
+              { isAuthenticated ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
+              { isAuthenticated ? <h4>{address.slice(0,5)}...{address.slice(-5)}</h4> : <p>Wallet Address</p>}
             </div>
             <div>
               <AccountCircleOutlinedIcon

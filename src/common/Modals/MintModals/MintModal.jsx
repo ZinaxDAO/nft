@@ -29,7 +29,7 @@ const MintModal = (props) => {
     
     if(nftName === "0.5 Zinar NFT"){
       // run mint function
-    const  mintTx= await contract.mintZinar05(quantity, {value: ethers.utils.parseEther(totalPrice)});
+      const  mintTx= await contract.mintZinar05(quantity, {value: ethers.utils.parseEther(totalPrice)});
       const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
       // if the contract is mined successfully, do the following:
@@ -39,59 +39,58 @@ const MintModal = (props) => {
       } else {
         alert("Transaction failed! Please try again");
       }
-    } else if(nftName === "1 Zinar NFT"){
+    }else if(nftName === "1 Zinar NFT"){
       // run mint function
       const mintTx= await contract.mintZinar1(quantity, {value: ethers.utils.parseEther(totalPrice)});
       const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-       // if the contract is mined successfully, do the following:
-       if (receipt.status === 1) {
-         alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
-         
-       } else {
-         alert("Transaction failed! Please try again");
-       }
+      // if the contract is mined successfully, do the following:
+      if (receipt.status === 1) {
+        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        
+      } else {
+        alert("Transaction failed! Please try again");
+      }
     }
     else if(nftName === "2 Zinar NFT"){
-      // run mint function
-        const mintTx= await contract.mintZinar2(quantity, {value: ethers.utils.parseEther(totalPrice)});
-        const receipt = await mintTx.wait(); // wait for the transaction to be mined
+    // run mint function
+      const mintTx= await contract.mintZinar2(quantity, {value: ethers.utils.parseEther(totalPrice)});
+      const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-        // if the contract is mined successfully, do the following:
-        if (receipt.status === 1) {
-          alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
-          
-        } else {
-          alert("Transaction failed! Please try again");
-        }
+      // if the contract is mined successfully, do the following:
+      if (receipt.status === 1) {
+        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        
+      } else {
+        alert("Transaction failed! Please try again");
+      }
     }
   
     else if(nftName === "5 Zinar NFT"){
       // run mint function
       const mintTx= await contract.mintZinar5(quantity, {value: ethers.utils.parseEther(totalPrice)});
-       const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
        // if the contract is mined successfully, do the following:
-       if (receipt.status === 1) {
-         alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
-         
-       } else {
-         alert("Transaction failed! Please try again");
-       }
+      if (receipt.status === 1) {
+        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+      } else {
+        alert("Transaction failed! Please try again");
+      }
     }
   
     else if(nftName === "10 Zinar NFT"){
       // run mint function
       const  mintTx= await contract.mintZinar10(quantity, {value: ethers.utils.parseEther(totalPrice)});
-        const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-        // if the contract is mined successfully, do the following:
-        if (receipt.status === 1) {
-          alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
-          
-        } else {
-          alert("Transaction failed! Please try again");
-        }
+      // if the contract is mined successfully, do the following:
+      if (receipt.status === 1) {
+        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        
+      } else {
+        alert("Transaction failed! Please try again");
+      }
     }
 
 } 

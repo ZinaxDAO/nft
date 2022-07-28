@@ -71,9 +71,7 @@ const DashboardMenu = () => {
 
       {mintModal && <MintModal setMintModal={setMintModal} />}
       {nftLoansModal && <NftLoansModal setNftLoansModal={setNftLoansModal} />}
-      {repayLoansModal && (
-        <RepayLoansModal setRepayLoansModal={setRepayLoansModal} />
-      )}
+      {repayLoansModal && (<RepayLoansModal setRepayLoansModal={setRepayLoansModal} />)}
     </React.Fragment>
   );
 };

@@ -7,8 +7,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const MintModal = (props) => {
-  const { setRepayLoansModal } = props;
+const NftStakingModal = async (props) => {
+  const { setNftStakingModal } = props;
 
   const settings = {
     dots: false,
@@ -25,7 +25,7 @@ const MintModal = (props) => {
       <div className="modalContainer">
         <div className="closeModalBtn">
           <CancelOutlinedIcon
-            onClick={() => setRepayLoansModal(false)}
+            onClick={() => setNftStakingModal(false)}
             className="button"
           />
         </div>
@@ -53,4 +53,4 @@ const MintModal = (props) => {
   );
 };
 
-export default MintModal;
+export default NftStakingModal;

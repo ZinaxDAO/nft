@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
-import contractABI from '../../../utils/ZinarNFTtest.json'
+import contractABI from "../../../utils/ZinarNFTtest.json"
 
 const MintModal = (props) => {
   const CONTRACT_ADDRESS = '0x94ea4e253891240715E089E7E98Eef82258141BC';

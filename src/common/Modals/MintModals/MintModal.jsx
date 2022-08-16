@@ -139,9 +139,10 @@ const MintModal = (props) => {
                     <div>{nft.price}</div>
                     <div>
                       <input
+                        className="modalInput"
                         type="text"
                         value={quantity}
-                        placeholder='quantity'
+                        placeholder='Quantity'
                         onChange={e => {setQuantity(e.target.value)
                         const total = e.target.value * nft.price;
                         setTotalPrice(String(total));
@@ -152,8 +153,10 @@ const MintModal = (props) => {
                     </div> {/* quantity of zinar to mint */}
                     <div>
                       <input
+                        className="modalInput"
                         type="text"
                         value={totalPrice}
+                        placeholder='Total Price'
                         onChange={e => setTotalPrice(e.target.value)}
                       />
                     </div> {/* nft price * quantity */}

@@ -68,10 +68,10 @@ const NftStakingModal = (props) => {
                 <div className="repayLoansModalContent">
                   <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>
                   <div>
-                    <div>BNB Balance</div>
+                    <div>MATIC Balance</div>
                     <div>Eligible NFT Balance</div>
-                    <div>Loaned Amount</div>
-                    <div>Accrued Interest</div>
+                    <div>Token Id: {nft.token_id}</div>
+                    <div>Accrued Reward</div>
                     <button>STAKE</button>
                   </div>
                 </div>

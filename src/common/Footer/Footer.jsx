@@ -32,10 +32,10 @@ const Footer = () => {
           <a href="https://api.zinari.org/docs">
             <p>Developers</p>
           </a>
-          <a href="https://v2.zinax.org">
+          <a href="https://zinax.app">
             <p>Pools</p>
           </a>
-          <a href="https://v2.zinax.org">
+          <a href="https://zinax.app">
             <p>Farms</p>
           </a>
         </div>
@@ -81,7 +81,7 @@ const Footer = () => {
         <a href="https://t.me/zinaxtoken" className="footer-links">
           <img src={TelegramIcon} alt="telegram-icon" />
         </a>
-        <a href="#" className="footer-links">
+        <a href="https://github.com/ZinaxDAO" className="footer-links">
           <img src={GithubIcon} alt="github-icon" />
         </a>
       </div>

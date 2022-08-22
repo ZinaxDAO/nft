@@ -12,7 +12,7 @@ The Minting contract also holds the referral contract which handles the logic fo
 The staking contract allows users to stake their NFTs and earn token rewards from them and the loaning contract allows NFT hodlers to use their NFTs as collateral for collecting loans from a Liquidity pool.
 
 The react frontend helps users interact with their contract. To do this, it incorporates Ethers.js for interacting with the smart contracts and Moralis for connecting to user wallets and fetching user and contract details.
-The application also makes use of IPFS to store the NFT media and metadata
+The application also makes use of [IPFS to store the NFT media and metadata](https://ipfs.io/ipfs/QmZ8qSUG4MyyWu2CWDoFSki46KktLdNQZyyekaLCeTTFE8)
 
 The application can:
 - Mint Zinar NFTs

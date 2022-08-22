@@ -10,7 +10,7 @@ import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarNFTtest.json"
 
 const MintModal = (props) => {
-  const CONTRACT_ADDRESS = '0x94ea4e253891240715E089E7E98Eef82258141BC';
+  const CONTRACT_ADDRESS = '0xF17b66b416a3d9A0D6f2f3F9e713D8735dd29B13';
   const { setMintModal } = props;
   const [quantity, setQuantity] = useState('');
   const [totalPrice, setTotalPrice] = useState("");
@@ -25,7 +25,14 @@ const MintModal = (props) => {
     initialSlide: 0,
   };
 
-  const chooseNft = async(nftName,contract) =>{
+  const chooseNft = async(nftName) =>{
+
+    const { ethereum } = window;
+			const provider = new ethers.providers.Web3Provider(ethereum);
+			const signer = provider.getSigner();
+			// connect to the contract you want to execute
+			const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
+			console.log('Accessing wallet to pay gas');
     
     if(nftName === "0.5 Zinar NFT"){
       // run mint function
@@ -34,7 +41,7 @@ const MintModal = (props) => {
 
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
         
       } else {
         alert("Transaction failed! Please try again");
@@ -46,7 +53,7 @@ const MintModal = (props) => {
 
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
         
       } else {
         alert("Transaction failed! Please try again");
@@ -59,7 +66,7 @@ const MintModal = (props) => {
 
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
         
       } else {
         alert("Transaction failed! Please try again");
@@ -73,7 +80,7 @@ const MintModal = (props) => {
 
        // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
       } else {
         alert("Transaction failed! Please try again");
       }
@@ -86,7 +93,7 @@ const MintModal = (props) => {
 
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://testnet.bscscan.com/tx/"+mintTx.hash);
+        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
         
       } else {
         alert("Transaction failed! Please try again");
@@ -97,23 +104,15 @@ const MintModal = (props) => {
 
   const mintZinarNft = async () => {
 
-		//const mintPrice = '0.5';
 		console.log(totalPrice, quantity);
 
 		try {
-			const { ethereum } = window;
-			const provider = new ethers.providers.Web3Provider(ethereum);
-			const signer = provider.getSigner();
-			// connect to the contract you want to execute
-			const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
-			console.log('Accessing wallet to pay gas');
-
-      let mintTx;
       let nftName;
-      nfts.map(async(nft) => {
+      nfts.map((nft) => {
         nftName = nft.name;
+        chooseNft(nftName);
       })
-      await chooseNft(nftName,contract);
+      
     }catch(error){
       console.log(error);
     }

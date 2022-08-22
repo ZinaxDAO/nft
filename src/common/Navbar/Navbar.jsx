@@ -17,7 +17,7 @@ const Navbar = () => {
   }, [isAuthenticated]);
 
   const switchNetworkMumbai = async () => {
-    const web3 = await Moralis.Web3.enable();
+    const web3 = await Moralis.enable();
     try {
       await web3.currentProvider.request({
         method: "wallet_switchEthereumChain",

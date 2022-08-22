@@ -29,4 +29,4 @@ const FetchNft = async () => {
     }
 }
 
-  export default FetchNft;
+export default FetchNft;

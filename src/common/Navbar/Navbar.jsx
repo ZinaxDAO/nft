@@ -1,12 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
+import { useMoralis } from "react-moralis";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+  const { authenticate, isAuthenticated, isAuthenticating, authError, user, Moralis } = useMoralis();
+  
+  const [address, setAddress] = useState('');
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      setAddress(user.attributes.ethAddress);
+    }
+  }, [isAuthenticated]);
+
+  const switchNetworkMumbai = async () => {
+    const web3 = await Moralis.enable();
+    try {
+      await web3.currentProvider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x13881" }],
+      });
+    } catch (error) {
+      if (error.code === 4902) {
+        try {
+          await web3.currentProvider.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13881",
+                chainName: "Mumbai",
+                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                nativeCurrency: {
+                  name: "Matic",
+                  symbol: "Matic",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
+              },
+            ],
+          });
+        } catch (error) {
+          alert(error.message);
+        }
+      }
+    }
+  }
+
+  const [open, setOpen] = useState(false);
   return (
     <header className="header">
       <nav className="navbar">
@@ -34,16 +77,15 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-              <a href="/">
-                <button className="nav-btn">
-                  Connect
+                <button className="nav-btn" onClick={() => authenticate()}>
+                  {isAuthenticated ? <p> {address.slice(0,4)}...{address.slice(-4)} </p> : <p>Connect</p>}
                   <span>
                     <img src={ConnectImg} alt="connect" />
                   </span>
                 </button>
-              </a>
             </li>
           </ul>
+          
         </div>
 
         <div

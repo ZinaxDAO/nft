@@ -44,6 +44,14 @@
     margin-top: 1rem;
 }
 
+.modalInput{
+    background: transparent;
+    border: none;
+    text-align: center;
+    outline: none;
+    color: #fff;
+}
+
 
 /**********************************/
 /***** Responsive Layout **********/

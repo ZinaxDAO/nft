@@ -7,6 +7,7 @@ import NftFive from "../../assets/images/nftfive.png";
 const nfts = [
   {
     name: "0.5 Zinar NFT",
+    price: "0.1",
     loanAmount: "$12",
     multiplier: "0.5x",
     backing: "Zinari(ZINA)",
@@ -16,6 +17,7 @@ const nfts = [
   },
   {
     name: "1 Zinar NFT",
+    price: "0.2",
     loanAmount: "$30",
     multiplier: "1x",
     backing: "Zinari(ZINA)",
@@ -25,6 +27,7 @@ const nfts = [
   },
   {
     name: "2 Zinar NFT",
+    price: "0.4",
     loanAmount: "$72",
     multiplier: "2x",
     backing: "Zinari(ZINA)",
@@ -35,6 +38,7 @@ const nfts = [
   {
     name: "5 Zinar NFT",
     loanAmount: "$180",
+    price: "1",
     multiplier: "5x",
     backing: "BUSD",
     loanDuration: "30 days",
@@ -44,6 +48,7 @@ const nfts = [
   {
     name: "10 Zinar NFT",
     loanAmount: "$480",
+    price: "2",
     multiplier: "10x",
     backing: "BUSD",
     loanDuration: "30 days",

@@ -1,4 +1,4 @@
-# The Zinar NFT Frontend
+# The Zinar NFT
 
 This repo holds the codes for the frontend and zinar nft contracts. 
 

@@ -11,7 +11,7 @@ const MyNfts = (props) => {
   const fetchNFTsForContract = async () => {
     const options = {
       chain: "mumbai",
-      token_address: "0x35b7505f2ccd3b84c75d52287b68ba0e292a22a1"
+      token_address: "0xF17b66b416a3d9A0D6f2f3F9e713D8735dd29B13"
     };
     try{
       const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });

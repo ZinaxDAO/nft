@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./MyNfts.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useMoralisWeb3Api } from "react-moralis";
+import Slider from "react-slick";
 
 const MyNfts = (props) => {
   const { setShowMyNfts } = props;
@@ -10,8 +11,8 @@ const MyNfts = (props) => {
 
   const fetchNFTsForContract = async () => {
     const options = {
-      chain: "mumbai",
-      token_address: "0xF17b66b416a3d9A0D6f2f3F9e713D8735dd29B13"
+      chain: "bsc testnet",
+      token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
     };
     try{
       const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });
@@ -37,6 +38,15 @@ const MyNfts = (props) => {
     fetchNFTsForContract();
   }, []);
 
+  const settings = {
+    dots: false,
+    lazyLoad: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
+  };
 
   return (
     <div className="mynfts">

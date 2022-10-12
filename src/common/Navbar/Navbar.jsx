@@ -6,18 +6,29 @@ import ConnectImg from "../../assets/images/connectImg.png";
 import { useMoralis } from "react-moralis";
 
 const Navbar = () => {
+  const polygonChainId = "0x13881";
   const { authenticate, isAuthenticated, isAuthenticating, authError, user, Moralis } = useMoralis();
   
   const [address, setAddress] = useState('');
+  const [chainId, setChainId] = useState('');
 
   useEffect(() => {
-    if (isAuthenticated) {
+    getChainId();
+    if (isAuthenticated && chainId !== polygonChainId) {
+      switchNetworkMumbai();
       setAddress(user.attributes.ethAddress);
     }
   }, [isAuthenticated]);
 
+  const getChainId = async () => {
+    // await Moralis.enableWeb3();
+    const chainId = Moralis.getChainId();
+    console.log(chainId);
+    setChainId(chainId);
+  }
+
   const switchNetworkMumbai = async () => {
-    const web3 = await Moralis.enable();
+    const web3 = await Moralis.enableWeb3();
     try {
       await web3.currentProvider.request({
         method: "wallet_switchEthereumChain",

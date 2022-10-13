@@ -169,8 +169,7 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
     // @notice The maximum number of active loans allowed on this platform.
     uint256 public maximumNumberOfActiveLoans = 1000;
 
-    // @notice The percentage of interest that is taken by the contract admin as a fee, measured in
-    //         basis points (hundreths of a percent).
+    // @notice The amount in Matic that is taken by the contract admin as a fee for perfoming loan transactions 
     uint256 public adminFeeInMatic = 0.05 ether;
 
     constructor() {
@@ -178,9 +177,7 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
         nftContractIsWhitelisted[address(0xA53f375F375F633f4F8db67aF19dfF1B9fCF735F)] = true;
     }
 
-    // @notice This function can be called by admins to change the whitelist
-    //         status of an NFT contract. This includes both adding an NFT
-    //         contract to the whitelist and removing it.
+    // @notice This function can be called by admins to change the whitelist status of an NFT contract. This includes both adding an NFT contract to the whitelist and removing it.
     function whitelistNFTContract(address _nftContract, bool _setAsWhitelisted) external onlyOwner {
         nftContractIsWhitelisted[_nftContract] = _setAsWhitelisted;
     }
@@ -235,12 +232,8 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         // interestIsProRated is set to false, then this value is not used and
         // is irrelevant.
         uint32 loanInterestRateForDurationInBasisPoints;
-        // The percent (measured in basis points) of the interest earned that
-        // will be taken as a fee by the contract admins when the loan is
-        // repaid. The fee is stored here to prevent an attack where the
-        // contract admins could adjust the fee right before a loan is repaid,
-        // and take all of the interest earned.
-        uint32 loanAdminFeeInBasisPoints;
+        // The amount of Matic that will be taken as a fee by the contract admins when the loan is repaid.
+        uint32 loanAdminFee;
         // The ERC721 contract of the NFT collateral
         address nftCollateralContract;
         // The address of the borrower.
@@ -310,9 +303,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         uint256 _loanPrincipalAmount,
         uint256 _maximumRepaymentAmount,
         uint256 _nftCollateralId,
-        uint256 _loanDuration,
         uint256 _loanInterestRateForDurationInBasisPoints,
-        uint256 _adminFeeInBasisPoints,
         address _nftCollateralContract
     ) public whenNotPaused nonReentrant payable {
 
@@ -325,9 +316,9 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
             maximumRepaymentAmount: _maximumRepaymentAmount,
             nftCollateralId: _nftCollateralId,
             loanStartTime: uint64(block.timestamp), //_loanStartTime
-            loanDuration: uint32(_loanDuration),
+            loanDuration: uint32(loanDuration),
             loanInterestRateForDurationInBasisPoints: uint32(_loanInterestRateForDurationInBasisPoints),
-            loanAdminFeeInBasisPoints: uint32(_adminFeeInBasisPoints),
+            loanAdminFee: uint32(adminFeeInMatic),
             nftCollateralContract: _nftCollateralContract,
             borrower: msg.sender, //borrower
             interestIsProRated: (_loanInterestRateForDurationInBasisPoints != ~(uint32(0)))
@@ -337,7 +328,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         require(loan.maximumRepaymentAmount >= loan.loanPrincipalAmount, 'Negative interest rate loans are not allowed.');
         require(uint256(loan.loanDuration) <= loanDuration, 'Loan duration exceeds maximum loan duration');
         require(uint256(loan.loanDuration) != 0, 'Loan duration cannot be zero');
-        require(uint256(loan.loanAdminFeeInBasisPoints) == adminFeeInMatic, 'The admin fee has changed since this order was signed.');
+        require(uint256(loan.loanAdminFee) == adminFeeInMatic, 'The admin fee has changed since this order was signed.');
 
         // Check that the collateral come from the supported contract
         require(nftContractIsWhitelisted[loan.nftCollateralContract], 'NFT collateral contract is not whitelisted to be used by this contract');
@@ -354,7 +345,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         // Transfer collateral from borrower to this contract to be held until loan completion.
         IERC721(loan.nftCollateralContract).transferFrom(msg.sender, address(this), loan.nftCollateralId);
 
-        // Transfer principal from lender to borrower.
+        // Transfer principal from lender to borrower. 
         payable((msg.sender)).transfer(loan.loanPrincipalAmount);
 
         // Emit an event with all relevant details from this transaction.
@@ -403,8 +394,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
                 uint256(loan.loanInterestRateForDurationInBasisPoints)
             );
         }
-        uint256 adminFee = _computeAdminFee(interestDue, uint256(loan.loanAdminFeeInBasisPoints));
-        uint256 payoffAmount = ((loan.loanPrincipalAmount).add(interestDue)).sub(adminFee);
+        uint256 payoffAmount = ((loan.loanPrincipalAmount).add(interestDue));
 
         // Mark loan as repaid before doing any external transfers to follow the Checks-Effects-Interactions design pattern.
         loanRepaidOrLiquidated[_loanId] = true;
@@ -416,7 +406,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         payable(address(this)).transfer(payoffAmount);
 
         // Transfer fees from borrower to admins
-        payable(address(this)).transfer(adminFee);
+        payable(address(this)).transfer(adminFeeInMatic);
 
         // Transfer collateral from this contract to borrower.
         require(_transferNftToAddress(
@@ -432,7 +422,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
             loan.loanPrincipalAmount,
             loan.nftCollateralId,
             payoffAmount,
-            adminFee,
+            adminFeeInMatic,
             loan.nftCollateralContract
         );
 
@@ -486,9 +476,7 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         }
     }
 
-    // @notice A convenience function that calculates the amount of interest
-    //         currently due for a given loan. The interest is capped at
-    //         _maximumRepaymentAmount minus _loanPrincipalAmount.
+    // @notice A convenience function that calculates the amount of interest currently due for a given loan. The interest is capped at _maximumRepaymentAmount minus _loanPrincipalAmount.
     function _computeInterestDue(uint256 _loanPrincipalAmount, uint256 _maximumRepaymentAmount, uint256 _loanDurationSoFarInSeconds, uint256 _loanTotalDurationAgreedTo, uint256 _loanInterestRateForDurationInBasisPoints) internal pure returns (uint256) {
         uint256 interestDueAfterEntireDuration = (_loanPrincipalAmount.mul(_loanInterestRateForDurationInBasisPoints)).div(uint256(10000));
         uint256 interestDueAfterElapsedDuration = (interestDueAfterEntireDuration.mul(_loanDurationSoFarInSeconds)).div(_loanTotalDurationAgreedTo);
@@ -497,11 +485,6 @@ contract ZinarLoans is ZinarLoansAdmin, ERC721 {
         } else {
             return interestDueAfterElapsedDuration;
         }
-    }
-
-    // @notice A convenience function computing the adminFee taken from a specified quantity of interest.
-    function _computeAdminFee(uint256 _interestDue, uint256 _adminFeeInBasisPoints) internal pure returns (uint256) {
-    	return (_interestDue.mul(_adminFeeInBasisPoints)).div(10000);
     }
 
     // @notice We call this function when we wish to transfer an NFT from our contract to another destination.

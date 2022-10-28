@@ -146,8 +146,7 @@ contract Pausable is PauserRole {
 
 contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
 
-    // @notice This event is fired whenever the admins change the percent of interest rates earned charged as a fee. Note that
-    // newAdminFee can never exceed 10,000, since the fee is measured in basis points.
+    // @notice This event is fired whenever the admins change the amount in MATIC charged as a fee. 
     event AdminFeeUpdated(uint256 newAdminFee);
 
     // @notice A mapping from an NFT contract's address to a boolean value that checks if that contract is whitelisted to be used by this contract.
@@ -161,8 +160,12 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
     uint256 public zinar10InterestRate;
 
     // @notice The maximum duration of any loan started measured in seconds. This is both a sanity-check for borrowers
-    //and a check to ensure that the loan duration never exceeds the space alotted for it in the loan struct.
-    uint256 public loanDuration = 2 weeks;
+    // and a check to ensure that the loan duration never exceeds the space alotted for it in the loan struct.
+    uint256 public loanDuration = 15 minutes;
+
+    // @notice An extension for borrowers to payback their overdue loans 
+    // when this period is over, borrowers can longer payback their loans to recover their NFT
+    uint256 public gracePeriod = 15 minutes;
 
     // @notice The maximum number of active loans allowed on this platform.
     uint256 public maximumNumberOfActiveLoans = 1000;
@@ -172,7 +175,7 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
 
     constructor() {
         // Whitelist mainnet ZinarNFT
-        nftContractIsWhitelisted[address(0xA53f375F375F633f4F8db67aF19dfF1B9fCF735F)] = true;
+        nftContractIsWhitelisted[address(0xF17b66b416a3d9A0D6f2f3F9e713D8735dd29B13)] = true;
     }
 
     // @notice This function can be called by admins to change the whitelist status of an NFT contract. This includes both adding an NFT contract to the whitelist and removing it.
@@ -199,7 +202,7 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
     }
 }
 
-contract ZinarLoans is ZinarLoansAdmin, IERC721 {
+contract ZinarLoans is ZinarLoansAdmin {
 
     // @notice OpenZeppelin's SafeMath library is used for all arithmetic operations to avoid overflows/underflows.
     using SafeMath for uint256;
@@ -265,9 +268,8 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
         address nftCollateralContract
     );
 
-    // @notice A continuously increasing counter that simultaneously allows
-    //         every loan to have a unique ID and provides a running count of
-    //         how many loans have been started by this contract.
+    // @notice A continuously increasing counter that simultaneously allows  every loan to have a unique ID and provides a running count of
+    // how many loans have been started by this contract.
     uint256 public totalNumLoans = 0;
 
     // @notice A counter of the number of currently outstanding loans.
@@ -292,6 +294,10 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
     ) public whenNotPaused nonReentrant payable {
         // Calculate the interest for the loan
         uint256 loanInterest = (_loanPrincipalAmount.mul(_loanInterestRateInBasisPoints).mul(loanDuration)).div(uint256(10000));
+        uint256 maximumRepaymentAmount = _loanPrincipalAmount.add(loanInterest);
+
+        // Increase the total number of loans 
+        totalNumLoans = totalNumLoans.add(1);
 
         // Save loan details to a struct in memory first, to save on gas if any
         // of the below checks fail, and to avoid the "Stack Too Deep" error by
@@ -299,7 +305,7 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
         Loan memory loan = Loan({
             loanId: totalNumLoans, //currentLoanId,
             loanPrincipalAmount: _loanPrincipalAmount,
-            maximumRepaymentAmount: loanInterest,
+            maximumRepaymentAmount: maximumRepaymentAmount,
             nftCollateralId: _nftCollateralId,
             loanStartTime: uint64(block.timestamp), //_loanStartTime
             loanDuration: uint32(loanDuration),
@@ -318,7 +324,6 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
         require(nftContractIsWhitelisted[loan.nftCollateralContract], 'NFT collateral contract is not whitelisted to be used by this contract');
 
         // Add the loan to storage before moving collateral/principal to follow the Checks-Effects-Interactions pattern.
-        totalNumLoans = totalNumLoans.add(1);
         loanIdToLoan[totalNumLoans] = loan;
 
         // Update number of active loans.
@@ -328,6 +333,9 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
         // @dev remember to approve loan contract in the NFT contract before transfer 
         // Transfer collateral from borrower to this contract to be held until loan completion.
         IERC721(loan.nftCollateralContract).transferFrom(msg.sender, address(this), loan.nftCollateralId);
+
+        // Transfer admin fee from borrower to contract 
+        payable(address(this)).transfer(loan.loanAdminFee);
 
         // Transfer principal from lender to borrower. 
         payable((msg.sender)).transfer(loan.loanPrincipalAmount);
@@ -350,20 +358,22 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
     // begun. The interest will continue to accrue after the loan has expired. This function can
     // continue to be called by the borrower even after the loan has expired to retrieve their NFT. 
     function payBackLoan(uint256 _loanId) external nonReentrant payable {
-        // Sanity check that payBackLoan() and liquidateOverdueLoan() have never been called on this loanId.
-        require(!loanRepaidOrLiquidated[_loanId], 'Loan has already been repaid or liquidated');
-
         // Fetch loan details from storage, but store them in memory for the sake of saving gas.
         Loan memory loan = loanIdToLoan[_loanId];
 
+        // Calculate the total Loan duration 
+        uint256 totalLoanDuration = (uint256(loan.loanStartTime)).add(uint256(loan.loanDuration).add(gracePeriod));
+        
+        // Sanity check that payBackLoan() and liquidateOverdueLoan() have never been called on this loanId.
+        require(!loanRepaidOrLiquidated[_loanId], 'Loan has already been repaid or liquidated');
+        // Check that the loan duration is not overdue
+        require(block.timestamp < totalLoanDuration, 'Loan overdue');
         // Check that the borrower is the caller, only the borrower is entitled to the collateral.
         require(msg.sender == loan.borrower, 'Only the borrower can pay back a loan and reclaim the underlying NFT');
 
-        // Calculate amounts to send to lender and admins
+        // Calculate amounts to send to the loan contract 
         uint256 interestDue = (loan.maximumRepaymentAmount).sub(loan.loanPrincipalAmount);
-
         uint256 payoffAmount = ((loan.loanPrincipalAmount).add(interestDue));
-
         uint256 totalPayoffAmount = (payoffAmount).add(adminFeeInMatic);
 
         // Mark loan as repaid before doing any external transfers to follow the Checks-Effects-Interactions design pattern.
@@ -406,7 +416,7 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
         Loan memory loan = loanIdToLoan[_loanId];
 
         // Ensure that the loan is indeed overdue, since we can only liquidate overdue loans.
-        uint256 loanMaturityDate = (uint256(loan.loanStartTime)).add(uint256(loan.loanDuration));
+        uint256 loanMaturityDate = (uint256(loan.loanStartTime)).add(uint256(loan.loanDuration).add(gracePeriod));
         require(block.timestamp > loanMaturityDate, 'Loan is not overdue yet');
 
         // Mark loan as liquidated before doing any external transfers to follow the Checks-Effects-Interactions design pattern.
@@ -453,5 +463,7 @@ contract ZinarLoans is ZinarLoansAdmin, IERC721 {
     function _transferNftToAddress(address _nftContract, uint256 _nftId, address _recipient) internal returns (bool) {
         (bool success, ) = _nftContract.call(abi.encodeWithSelector(IERC721(_nftContract).transferFrom.selector, address(this), _recipient, _nftId));
         return success;
+        
     }
+
 }

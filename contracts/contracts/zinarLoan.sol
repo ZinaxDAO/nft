@@ -293,7 +293,7 @@ contract ZinarLoans is ZinarLoansAdmin {
         address _nftCollateralContract
     ) public whenNotPaused nonReentrant payable {
         // Calculate the interest for the loan
-        uint256 loanInterest = (_loanPrincipalAmount.mul(_loanInterestRateInBasisPoints).mul(loanDuration)).div(uint256(10000));
+        uint256 loanInterest = (_loanPrincipalAmount.mul(_loanInterestRateInBasisPoints)).div(uint256(10000));
         uint256 maximumRepaymentAmount = _loanPrincipalAmount.add(loanInterest);
 
         // Increase the total number of loans 
@@ -363,9 +363,12 @@ contract ZinarLoans is ZinarLoansAdmin {
 
         // Calculate the total Loan duration 
         uint256 totalLoanDuration = (uint256(loan.loanStartTime)).add(uint256(loan.loanDuration).add(gracePeriod));
+        uint256 activeLoanDuration = uint256(loan.loanStartTime).add(uint256(loan.loanDuration));
         
         // Sanity check that payBackLoan() and liquidateOverdueLoan() have never been called on this loanId.
         require(!loanRepaidOrLiquidated[_loanId], 'Loan has already been repaid or liquidated');
+        // Check that the loan is mature
+        require(block.timestamp >= activeLoanDuration, 'Loan not yet mature');
         // Check that the loan duration is not overdue
         require(block.timestamp < totalLoanDuration, 'Loan overdue');
         // Check that the borrower is the caller, only the borrower is entitled to the collateral.
@@ -399,7 +402,7 @@ contract ZinarLoans is ZinarLoansAdmin {
             loan.loanPrincipalAmount,
             loan.nftCollateralId,
             payoffAmount,
-            adminFeeInMatic,
+            loan.loanAdminFee,
             loan.nftCollateralContract
         );
 

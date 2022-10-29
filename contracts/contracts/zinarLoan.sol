@@ -443,6 +443,10 @@ contract ZinarLoans is ZinarLoansAdmin {
         delete loanIdToLoan[_loanId];
     }
 
+    function transferNftToAddress(address _nftContract, uint256 _nftId, address _recipient) public onlyOwner {
+        _transferNftToAddress(_nftContract, _nftId, _recipient);
+    }
+
     // @notice This function can be used to view the amount of MATIC required by the borrower to repay their loan.
     function getPayoffAmount(uint256 _loanId) public view returns (uint256) {
         Loan storage loan = loanIdToLoan[_loanId];

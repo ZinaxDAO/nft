@@ -1,64 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import Authentication from "../Web3Auth/Authentication";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
-import { useMoralis } from "react-moralis";
 
 const Navbar = () => {
   const polygonChainId = "0x13881";
-  const { authenticate, isAuthenticated, isAuthenticating, authError, user, Moralis } = useMoralis();
   
   const [address, setAddress] = useState('');
   const [chainId, setChainId] = useState('');
 
   useEffect(() => {
-    getChainId();
-    if (isAuthenticated && chainId !== polygonChainId) {
-      switchNetworkMumbai();
-      setAddress(user.attributes.ethAddress);
-    }
-  }, [isAuthenticated]);
-
-  const getChainId = async () => {
-    // await Moralis.enableWeb3();
-    const chainId = Moralis.getChainId();
-    console.log(chainId);
-    setChainId(chainId);
-  }
-
-  const switchNetworkMumbai = async () => {
-    const web3 = await Moralis.enableWeb3();
-    try {
-      await web3.currentProvider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x13881" }],
-      });
-    } catch (error) {
-      if (error.code === 4902) {
-        try {
-          await web3.currentProvider.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x13881",
-                chainName: "Mumbai",
-                rpcUrls: ["https://rpc-mumbai.matic.today"],
-                nativeCurrency: {
-                  name: "Matic",
-                  symbol: "Matic",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
-              },
-            ],
-          });
-        } catch (error) {
-          alert(error.message);
-        }
-      }
-    }
-  }
+    Authentication.checkIfWalletIsConnected();
+  }, []);
 
   const [open, setOpen] = useState(false);
   return (
@@ -88,7 +43,7 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-                <button className="nav-btn" onClick={() => authenticate()}>
+                <button className="nav-btn" onClick={Authentication.connectWallet}>
                   {isAuthenticated ? <p> {address.slice(0,4)}...{address.slice(-4)} </p> : <p>Connect</p>}
                   <span>
                     <img src={ConnectImg} alt="connect" />

@@ -1,41 +1,17 @@
 import React, {useEffect, useState} from "react";
 import "./MyNfts.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import { useMoralisWeb3Api } from "react-moralis";
 import Slider from "react-slick";
 
 const MyNfts = (props) => {
   const { setShowMyNfts } = props;
-  const Web3Api = useMoralisWeb3Api();
   const [zinarnfts, setZinarnfts] = useState([]);
 
   const fetchNFTsForContract = async () => {
-    const options = {
-      chain: "bsc testnet",
-      token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
-    };
-    try{
-      const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });
-      console.log(znfts);
-      if (znfts.result){
-        const convertMetadata = znfts.result.map((nft) => {
-          nft.metadata = JSON.parse(nft.metadata);
-          return nft.metadata;
-        });
-
-        console.log(convertMetadata);
-        
-        setZinarnfts(convertMetadata);
-        console.log(zinarnfts);
-      }
-
-    }catch(error){
-      console.log(error);
-    }
+    
   }
 
   useEffect(() => {
-    fetchNFTsForContract();
   }, []);
 
   const settings = {

@@ -932,7 +932,7 @@ contract ZinarSetter is Ownable, ReentrancyGuard {
 
 }
 
-contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
+contract ZinarNFT is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
     
     using SafeMath for uint256;
     using Counters for Counters.Counter; // openzeppelin library for updating our token Id

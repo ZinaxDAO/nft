@@ -7,35 +7,20 @@ import Cubes from "../../../assets/images/cubes.png";
 import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { useMoralisWeb3Api, useMoralis } from "react-moralis";
 
 const DashboardIntro = () => {
-  const Web3Api = useMoralisWeb3Api();
-  const { Moralis, isAuthenticated, user } = useMoralis();
   const [balance, setBalance] = useState();
   const [address, setAddress] = useState('');
 
   const fetchNativeBalance = async () => {
-    // get BSC native balance for a given address
-    const options = {
-      chain: "mumbai"
-    };
-    const BNbalance = await Web3Api.Web3API.account.getNativeBalance(options);
-    const balance = Moralis.Units.FromWei(BNbalance.balance);
-    console.log(balance);
-    const finalBalance = Number(balance).toFixed(3);
-    setBalance(finalBalance);
+    
   };
 
   useEffect(() => {
-    fetchNativeBalance();
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setAddress(user.attributes.ethAddress);
-    }
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <div className="dashboard-intro">
@@ -61,8 +46,8 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              { isAuthenticated ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
-              { isAuthenticated ? <h4>{address.slice(0,5)}...{address.slice(-5)}</h4> : <p>Wallet Address</p>}
+              { <h5>MATIC BALANCE</h5> }
+              { <p>Wallet Address</p> }
             </div>
             <div>
               <AccountCircleOutlinedIcon

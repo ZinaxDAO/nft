@@ -13,7 +13,13 @@ const alchemy = new Alchemy(settings);
 const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
 
 // Print total NFT count returned in the response:
-const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
+const nftsForOwner = await alchemy.nft.getNftsForOwner(
+    ownerAddr,
+    "",
+    20,
+    [process.env.dev.MINT_NFT_ADDRESS],
+    true
+);
 console.log("number of NFTs found:", nftsForOwner.totalCount);
 
 // Get nft metadata for all NFTs in specified contract address 

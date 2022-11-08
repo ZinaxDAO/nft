@@ -107,7 +107,6 @@ const Navbar = () => {
       } 
   }
 
-
   useEffect(() => {
     checkIfWalletIsConnected();
     if(network !== 'Polygon Mumbai Testnet'){

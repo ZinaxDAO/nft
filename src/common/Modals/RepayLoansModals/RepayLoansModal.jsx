@@ -5,11 +5,9 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useMoralisWeb3Api } from "react-moralis";
 
 const NftStakingModal = (props) => {
   const { setNftStakingModal } = props;
-  const Web3Api = useMoralisWeb3Api();
   const [zinarnfts, setZinarnfts] = useState([]);
   const [nftTokenId, setNftTokenId] = useState([]);
 
@@ -19,18 +17,6 @@ const NftStakingModal = (props) => {
       token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
     };
     try{
-      const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });
-      console.log(znfts);
-      if (znfts.result){
-        const convertMetadata = znfts.result.map((nft) => {
-          nft.metadata = JSON.parse(nft.metadata);
-          return nft.metadata;
-        });
-
-        console.log(convertMetadata);
-        
-        setZinarnfts(convertMetadata);
-      }
 
     }catch(error){
       console.log(error);
@@ -38,30 +24,10 @@ const NftStakingModal = (props) => {
   }
 
   const fetchNftId = async () => {
-    const options = {
-      chain: "bsc testnet",
-      token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
-    };
-    try{
-      const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });
-      console.log(znfts);
-      if (znfts.result){
-        const fetchTokenId = znfts.result.map((nft) => {
-          nft.metadata = JSON.parse(nft.metadata);
-          return nft.metadata;
-        });
 
-        console.log(fetchTokenId);
-        setNftTokenId(fetchTokenId);
-      }
-
-    }catch(error){
-      console.log(error);
-    }
   }
 
   useEffect(() => {
-    fetchNFTsForContract();
   }, []);
 
   const settings = {

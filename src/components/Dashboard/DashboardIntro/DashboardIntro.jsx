@@ -19,9 +19,6 @@ const DashboardIntro = () => {
   useEffect(() => {
   }, []);
 
-  useEffect(() => {
-  }, []);
-
   return (
     <div className="dashboard-intro">
       <div className="intro-image">

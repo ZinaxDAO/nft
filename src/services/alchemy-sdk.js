@@ -9,15 +9,12 @@ const settings = {
 
 const alchemy = new Alchemy(settings);
 
-// Print owner's wallet address:
-const ownerAddr = "0xshah.eth";
-console.log("fetching NFTs for address:", ownerAddr);
-console.log("...");
+// Store owner wallet address in a variable 
+const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
 
 // Print total NFT count returned in the response:
-const nftsForOwner = await alchemy.nft.getNftsForOwner("0xshah.eth");
+const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
 console.log("number of NFTs found:", nftsForOwner.totalCount);
-console.log("...");
 
 // Get nft metadata for all NFTs in specified contract address 
 for (const nft of nftsForOwner.ownedNfts) {

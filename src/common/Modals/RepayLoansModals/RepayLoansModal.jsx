@@ -12,10 +12,6 @@ const NftStakingModal = (props) => {
   const [nftTokenId, setNftTokenId] = useState([]);
 
   const fetchNFTsForContract = async () => {
-    const options = {
-      chain: "bsc testnet",
-      token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
-    };
     try{
 
     }catch(error){

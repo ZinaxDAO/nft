@@ -45,7 +45,7 @@ const MyNfts = (props) => {
         await new Promise((r) => setTimeout(r, 2000));
 
         let name = response.title;
-        let imagePath = response.rawMetadata.image;
+        let imagePath = response.media[0].gateway;
         let desc = response.rawMetadata.description;
 
         console.log(name, imagePath, desc)
@@ -57,10 +57,9 @@ const MyNfts = (props) => {
         }
 
         nftArray.push(nftdata);
-
-        console.log(nftArray);
       }
-  }
+      return (nftArray);
+    }
   }
 
   useEffect(() => {
@@ -86,9 +85,12 @@ const MyNfts = (props) => {
       />
       <hr />
       <div className="nft-collections">
-        {nftArray ? (
-          nftArray.map((nft) => <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>)
-          ) : (
+        {nftArray ? 
+          nftArray.map(nft => {
+            return(
+              <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>
+            )
+          }) : (
           <h3 className='dark:text-gray-400 mx-2'>
             No NFTs minted yet
           </h3>

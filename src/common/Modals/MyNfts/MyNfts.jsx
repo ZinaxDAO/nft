@@ -45,21 +45,23 @@ const MyNfts = (props) => {
         await new Promise((r) => setTimeout(r, 2000));
 
         let name = response.title;
+        let token_id = response.tokenId;
         let imagePath = response.media[0].gateway;
         let desc = response.rawMetadata.description;
 
-        console.log(name, imagePath, desc)
+        console.log(name, token_id, imagePath, desc);
 
         let nftdata = {
           name: name,
+          token_id: token_id,
           image: imagePath,
           description: desc
         }
 
         nftArray.push(nftdata);
       }
-      return (nftArray);
     }
+    return (nftArray);
   }
 
   useEffect(() => {

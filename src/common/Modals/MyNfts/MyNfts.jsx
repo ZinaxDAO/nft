@@ -18,9 +18,9 @@ const MyNfts = (props) => {
 
     const alchemy = new Alchemy(settings);
 
-    // Store owner wallet address in a variable 
+    // Store owner wallet address and NFT contract address in a variable 
     const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
-    const contractAddy = "0xd7211a405e9f64d706888f742c5ee777c051880b";
+    const contractAddy = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
 
     // Print total NFT count returned in the response:
     const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);

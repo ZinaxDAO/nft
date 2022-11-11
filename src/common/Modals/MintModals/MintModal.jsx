@@ -10,7 +10,7 @@ import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarNFTtest.json"
 
 const MintModal = (props) => {
-  const CONTRACT_ADDRESS = '0xF17b66b416a3d9A0D6f2f3F9e713D8735dd29B13';
+  const CONTRACT_ADDRESS = '0x161ed8dc509bdae1b7faaad5b48269bc7c283c05';
   const { setMintModal } = props;
   const [quantity, setQuantity] = useState('');
   const [totalPrice, setTotalPrice] = useState("");

@@ -62,7 +62,7 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              { <h5>MATIC BALANCE</h5> }
+              { balance ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
               { <p>Wallet Address</p> }
             </div>
             <div>

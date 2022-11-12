@@ -11,7 +11,7 @@ import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const DashboardIntro = () => {
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState('');
   const [address, setAddress] = useState('');
 
   const fetchNativeBalance = async () => {
@@ -28,8 +28,11 @@ const DashboardIntro = () => {
 
     const nativeBalanceHex = await alchemy.core.getBalance(ownerAddr, "latest");
     const nativeBalanceBigNumber = parseInt(nativeBalanceHex._hex, 16);
-    const nativeBalance = ethers.utils.parseEther();
+    const balanceString = nativeBalanceBigNumber.toString();
+    console.log(balanceString);
+    const nativeBalance = ethers.utils.formatEther(balanceString);
     console.log(nativeBalance);
+    setBalance(nativeBalance);
   };
 
   useEffect(() => {

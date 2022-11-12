@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import { Network, Alchemy } from "alchemy-sdk";
+import { ethers } from "ethers";
 import "./DashboardIntro.css";
 import IntroImg from "../../../assets/images/introImg.png";
 import IntroBg2 from "../../../assets/images/introbg2.png";
@@ -13,11 +15,25 @@ const DashboardIntro = () => {
   const [address, setAddress] = useState('');
 
   const fetchNativeBalance = async () => {
-    
+    const settings = {
+      apiKey: "JP4YR7vEocn0Mx4jMcSuNWTHnLq6cqAS",
+      network: Network.MATIC_MUMBAI
+    };
+
+    const alchemy = new Alchemy(settings);
+
+    // Store owner wallet address and NFT contract address in a variable 
+    const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
+    const contractAddy = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
+
+    const nativeBalanceHex = await alchemy.core.getBalance(ownerAddr, "latest");
+    const nativeBalanceBigNumber = parseInt(nativeBalanceHex._hex, 16);
+    const nativeBalance = ethers.utils.parseEther();
+    console.log(nativeBalance);
   };
 
   useEffect(() => {
-  }, []);
+  }, [fetchNativeBalance()]);
 
   return (
     <div className="dashboard-intro">

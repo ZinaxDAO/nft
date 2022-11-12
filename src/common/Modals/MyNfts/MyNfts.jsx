@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { Network, Alchemy } from "alchemy-sdk";
 
 const MyNfts = (props) => {
+  const [zinarNft, setZinarNft] = useState([]);
   const { setShowMyNfts } = props;
   var nftArray = [];
 
@@ -30,7 +31,6 @@ const MyNfts = (props) => {
     for (const nft of nftsForOwner.ownedNfts) {
       let contractAddr = nft.contract.address;
       let token = nft.tokenId;
-      let collection = nft.collection;
 
       if(contractAddr === contractAddy){
         const response = await alchemy.nft.getNftMetadata(
@@ -38,7 +38,7 @@ const MyNfts = (props) => {
           token
         );
 
-        console.log(contractAddr, token, collection);
+        console.log(contractAddr, token);
 
         console.log(response);
 
@@ -53,7 +53,7 @@ const MyNfts = (props) => {
 
         let nftdata = {
           name: name,
-          token_id: token_id,
+          id: token_id,
           image: imagePath,
           description: desc
         }
@@ -61,7 +61,7 @@ const MyNfts = (props) => {
         nftArray.push(nftdata);
       }
     }
-    return (nftArray);
+    setZinarNft(nftArray);
   }
 
   useEffect(() => {
@@ -87,10 +87,12 @@ const MyNfts = (props) => {
       />
       <hr />
       <div className="nft-collections">
-        {nftArray ? 
-          nftArray.map(nft => {
+        {zinarNft ? 
+          zinarNft.map(nft => {
             return(
-              <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>
+              <div key={nft.id}>
+                <video autoPlay loop src={nft.image} width={250} height={250}/>
+              </div>
             )
           }) : (
           <h3 className='dark:text-gray-400 mx-2'>

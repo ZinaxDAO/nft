@@ -36,7 +36,8 @@ const DashboardIntro = () => {
   };
 
   useEffect(() => {
-  }, [fetchNativeBalance()]);
+    fetchNativeBalance()
+  }, []);
 
   return (
     <div className="dashboard-intro">

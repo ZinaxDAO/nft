@@ -28,11 +28,11 @@ const MintModal = (props) => {
   const chooseNft = async(nftName) =>{
 
     const { ethereum } = window;
-			const provider = new ethers.providers.Web3Provider(ethereum);
-			const signer = provider.getSigner();
-			// connect to the contract you want to execute
-			const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
-			console.log('Accessing wallet to pay gas');
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    // connect to the contract you want to execute
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
+    console.log('Accessing wallet to pay gas');
     
     if(nftName === "0.5 Zinar NFT"){
       // run mint function

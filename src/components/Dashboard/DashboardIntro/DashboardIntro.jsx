@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react";
-import { Network, Alchemy } from "alchemy-sdk";
-import { ethers } from "ethers";
 import "./DashboardIntro.css";
 import IntroImg from "../../../assets/images/introImg.png";
 import IntroBg2 from "../../../assets/images/introbg2.png";
@@ -10,17 +8,25 @@ import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { fetchNativeBalance } from "../../../services/alchemy-sdk";
+import { getConnectedAccount } from "../../../services/authentication";
 
 const DashboardIntro = () => {
   const [balance, setBalance] = useState('');
+  const [address, setAddress] = useState('');
 
   const getNativeBalance = async () => {
-    const nativeBalance = await fetchNativeBalance();
+    const nativeBalance = await fetchNativeBalance(address);
     setBalance(nativeBalance);
   };
 
+  const getAccount = async () => {
+    const accountAddress = await getConnectedAccount();
+    setAddress(accountAddress);
+  }
+
   useEffect(() => {
     getNativeBalance();
+    getAccount()
   }, []);
 
   return (
@@ -48,7 +54,7 @@ const DashboardIntro = () => {
           <div>
             <div>
               { balance ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
-              { <p>Wallet Address</p> }
+              { address ? <p>{address.slice(0,8)}...{address.slice(-8)}</p> : <p>Wallet Address</p> }
             </div>
             <div>
               <AccountCircleOutlinedIcon

@@ -55,9 +55,9 @@ const fetchNFTsForContract = async () => {
   return nftArray;
 };
 
-const fetchNativeBalance = async () => {
+const fetchNativeBalance = async (address) => {
   try {
-    const nativeBalanceHex = await alchemy.core.getBalance(ownerAddr, "latest");
+    const nativeBalanceHex = await alchemy.core.getBalance(address, "latest");
     const nativeBalanceBigNumber = parseInt(nativeBalanceHex._hex, 16);
     const balanceString = nativeBalanceBigNumber.toString();
     const nativeBalance = ethers.utils.formatEther(balanceString);

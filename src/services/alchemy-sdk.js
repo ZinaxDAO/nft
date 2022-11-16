@@ -1,18 +1,20 @@
 import { Network, Alchemy } from "alchemy-sdk";
+import { ethers } from "ethers";
+
+// Config
+const settings = {
+  apiKey: "JP4YR7vEocn0Mx4jMcSuNWTHnLq6cqAS",
+  network: Network.MATIC_MUMBAI,
+};
+
+const alchemy = new Alchemy(settings);
+
+// Store owner wallet address and NFT contract address in a variable
+const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
+const contractAddy = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
 
 const fetchNFTsForContract = async () => {
   const nftArray = [];
-  // Config
-  const settings = {
-    apiKey: "JP4YR7vEocn0Mx4jMcSuNWTHnLq6cqAS",
-    network: Network.MATIC_MUMBAI,
-  };
-
-  const alchemy = new Alchemy(settings);
-
-  // Store owner wallet address and NFT contract address in a variable
-  const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
-  const contractAddy = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
 
   // Print total NFT count returned in the response:
   const nftsForOwner = await alchemy.nft.getNftsForOwner(ownerAddr);
@@ -53,4 +55,17 @@ const fetchNFTsForContract = async () => {
   return nftArray;
 };
 
-export default fetchNFTsForContract;
+const fetchNativeBalance = async () => {
+  try {
+    const nativeBalanceHex = await alchemy.core.getBalance(ownerAddr, "latest");
+    const nativeBalanceBigNumber = parseInt(nativeBalanceHex._hex, 16);
+    const balanceString = nativeBalanceBigNumber.toString();
+    const nativeBalance = ethers.utils.formatEther(balanceString);
+    console.log(nativeBalance);
+    return nativeBalance.slice(0,6); 
+  }catch(error) {
+    console.log(error);
+  }
+};
+
+export {fetchNFTsForContract, fetchNativeBalance};

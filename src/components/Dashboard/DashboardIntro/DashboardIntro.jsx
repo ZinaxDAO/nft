@@ -9,34 +9,18 @@ import Cubes from "../../../assets/images/cubes.png";
 import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { fetchNativeBalance } from "../../../services/alchemy-sdk";
 
 const DashboardIntro = () => {
   const [balance, setBalance] = useState('');
-  const [address, setAddress] = useState('');
 
-  const fetchNativeBalance = async () => {
-    const settings = {
-      apiKey: "JP4YR7vEocn0Mx4jMcSuNWTHnLq6cqAS",
-      network: Network.MATIC_MUMBAI
-    };
-
-    const alchemy = new Alchemy(settings);
-
-    // Store owner wallet address and NFT contract address in a variable 
-    const ownerAddr = "0x98ebf48964108d46864AF6279CA40BdC8D7DF444";
-    const contractAddy = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
-
-    const nativeBalanceHex = await alchemy.core.getBalance(ownerAddr, "latest");
-    const nativeBalanceBigNumber = parseInt(nativeBalanceHex._hex, 16);
-    const balanceString = nativeBalanceBigNumber.toString();
-    console.log(balanceString);
-    const nativeBalance = ethers.utils.formatEther(balanceString);
-    console.log(nativeBalance);
+  const getNativeBalance = async () => {
+    const nativeBalance = await fetchNativeBalance();
     setBalance(nativeBalance);
   };
 
   useEffect(() => {
-    fetchNativeBalance()
+    getNativeBalance();
   }, []);
 
   return (

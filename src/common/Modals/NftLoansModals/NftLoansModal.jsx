@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarNFTtest.json"
-import fetchNFTsForContract from "../../../services/alchemy-sdk";
+import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
 
 const NftLoansModal = (props) => {
   const CONTRACT_ADDRESS = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";

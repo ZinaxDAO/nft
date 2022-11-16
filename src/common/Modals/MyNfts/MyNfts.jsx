@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./MyNfts.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import Slider from "react-slick";
-import fetchNFTsForContract from "../../../services/alchemy-sdk";
+import { fetchNFTsForContract } from "../../../services/alchemy-sdk";
 
 const MyNfts = (props) => {
   const [zinarNft, setZinarNft] = useState([]);

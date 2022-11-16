@@ -5,7 +5,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import fetchNFTsForContract from "../../../services/alchemy-sdk";
+import { fetchNFTsForContract } from "../../../services/alchemy-sdk";
 
 const NftStakingModal = (props) => {
   const { setNftStakingModal } = props;

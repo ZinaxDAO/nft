@@ -99,8 +99,7 @@ const MintModal = (props) => {
         alert("Transaction failed! Please try again");
       }
     }
-
-} 
+  } 
 
   const mintZinarNft = async () => {
 

@@ -5,26 +5,11 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import fetchNFTsForContract from "../../../services/alchemy-sdk";
 
 const NftStakingModal = (props) => {
   const { setNftStakingModal } = props;
-  const [zinarnfts, setZinarnfts] = useState([]);
-  const [nftTokenId, setNftTokenId] = useState([]);
-
-  const fetchNFTsForContract = async () => {
-    try{
-
-    }catch(error){
-      console.log(error);
-    }
-  }
-
-  const fetchNftId = async () => {
-
-  }
-
-  useEffect(() => {
-  }, []);
+  const [ZinarNft, setZinarNft] = useState([]);
 
   const settings = {
     dots: false,
@@ -35,6 +20,15 @@ const NftStakingModal = (props) => {
     slidesToScroll: 1,
     initialSlide: 0,
   };
+  
+  const getNfts = async () => {
+    const nftData = await fetchNFTsForContract();
+    setZinarNft(nftData);
+  };
+
+  useEffect(() => {
+    getNfts();
+  }, []);
 
   return (
     <div className="modalBackground">
@@ -47,7 +41,7 @@ const NftStakingModal = (props) => {
         </div>
         <div className="modalContent">
           <Slider {...settings}>
-            {zinarnfts.map((nft) => (
+            {ZinarNft.map((nft) => (
               <div className="repayLoansModal">
                 <div className="repayLoansModalTitle">{nft.name}</div>
                 <div className="repayLoansModalContent">

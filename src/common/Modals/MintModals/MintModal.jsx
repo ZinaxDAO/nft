@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarNFTtest.json"
+import { SuccessAlerts, FailedAlerts } from "../../../utils/alerts";
 
 const MintModal = (props) => {
   const CONTRACT_ADDRESS = '0x161ed8dc509bdae1b7faaad5b48269bc7c283c05';
@@ -41,10 +42,10 @@ const MintModal = (props) => {
 
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
+        SuccessAlerts();
         
       } else {
-        alert("Transaction failed! Please try again");
+        FailedAlerts();
       }
     }else if(nftName === "1 Zinar NFT"){
       // run mint function

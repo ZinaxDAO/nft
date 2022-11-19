@@ -4,6 +4,7 @@ import "./Navbar.css";
 import { networks } from "../../utils/networks";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
+import { connectWallet, checkIfWalletIsConnected, switchNetwork } from "../../services/authentication";
 
 const Navbar = () => {
   const polygonChainId = "0x13881";
@@ -64,47 +65,6 @@ const Navbar = () => {
       function handleChainChanged(_chainId){
           window.location.reload();
       }
-  }
-  
-  // switch ethereum networks 
-  const switchNetwork = async () => {
-      if (window.ethereum) {
-          try {  
-              // Try to switch to the Mumbai testnet
-              await window.ethereum.request({
-                  method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
-              });
-          } catch (error) {
-              // This error code means that the network we wish to switch to hasn't been added yet
-              if (error.code === 4902) { // if the network is not present, then try to add the network to Metamask
-                  try {
-                      await window.ethereum.request({
-                          method: 'wallet_addEthereumChain',
-                          params: [
-                              {	
-                                  chainId: '0x13881',
-                                  chainName: 'Polygon Mumbai Testnet',
-                                  rpcUrls: ['https://rpc-mumbai.maticvigil.com/'],
-                                  nativeCurrency: {
-                                          name: "Mumbai Matic",
-                                          symbol: "MATIC",
-                                          decimals: 18
-                                  },
-                                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
-                              },
-                          ],
-                      });
-                  } catch (error) {
-                      console.log(error);
-                  }
-              }
-              console.log(error);
-          }
-      } else {
-          // If window.ethereum is not found then MetaMask is not installed
-          alert('MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html');
-      } 
   }
 
   useEffect(() => {

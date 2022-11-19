@@ -11,7 +11,7 @@ import contractABI from "../../../utils/ZinarNFTtest.json"
 import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
 
 const NftLoansModal = (props) => {
-  const CONTRACT_ADDRESS = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
+  const LOAN_CONTRACT_ADDRESS = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
   const [zinarNft, setZinarNft] = useState([]);
   const { setNftLoansModal } = props;
 
@@ -34,15 +34,21 @@ const NftLoansModal = (props) => {
     getNfts();
   }, []);
 
-  const zinarLoan = async() => {
+  const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     // connect to the contract you want to execute
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
+    const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
     console.log('Accessing wallet to pay gas');
 
-    const takeLoan = await contract.beginLoan();
+    const takeLoan = await contract.beginLoan(
+      loanAmount, 
+      nftId, 
+      InterestRate, 
+      LOAN_CONTRACT_ADDRESS,
+      {value: ethers.utils.parseEther(loanAmount)}
+      );
     const receipt = await takeLoan.wait();
 
     if (receipt.status === 1) {
@@ -56,7 +62,7 @@ const NftLoansModal = (props) => {
   const beginLoan = async() =>{
     try {
       nfts.map((nft) => {
-        zinarLoan();
+        takeZinarLoan(0.1, nft.id, 1500);
       })
     }catch(error) {
       console.log(error)
@@ -86,7 +92,7 @@ const NftLoansModal = (props) => {
                     <div>NFT ID: {nft.id}</div>
                     <div>Loaned Amount</div>
                     <div>Accrued Interest</div>
-                    <button>Borrow Now</button>
+                    <button onClick={beginLoan}>Borrow Now</button>
                   </div>
                 </div>
               </div>

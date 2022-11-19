@@ -865,11 +865,11 @@ contract ZinarSetter is Ownable {
 
     uint256 public MAX_ZINAR_MINT = 20;
 
-    string public zinar05Uri;
-    string public zinar1Uri;
-    string public zinar2Uri;
-    string public zinar5Uri;
-    string public zinar10Uri;
+    string public zinar05Uri = "https://gateway.pinata.cloud/ipfs/QmW56qx8o6MVt4XJcLXRNBtPYDLQTFJY8WUJQqcuRJe2aw";
+    string public zinar1Uri = "https://ipfs.io/ipfs/QmQ5TyV6A7toFNqaNP62R2uLXWKW6rjZqoFoH9o1C3FCjL";
+    string public zinar2Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
+    string public zinar5Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
+    string public zinar10Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
     
     function flipSaleState() public onlyOwner returns (bool) {
         saleIsActive = !saleIsActive;
@@ -928,7 +928,7 @@ contract ZinarSetter is Ownable {
 
 }
 
-contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
+contract ZinarNFT is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
     
     using SafeMath for uint256;
     using Counters for Counters.Counter; // openzeppelin library for updating our token Id
@@ -954,8 +954,6 @@ contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, Z
         require(totalSupply().add(numberOfTokens) <= MAX_ZINAR05, "Purchase exceeds max supply");
         require(msg.value >= zinar05price.mul(numberOfTokens), "enter matic value");
 
-        zinar05Uri = "https://ipfs.io/ipfs/QmXCCYPKr1SQZ9mEvuZUC74JxJbYuGGUKzZqPghR14aGe5/zinar05.json";
-
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
         for(uint i = tokenId; i < end; i++) {
@@ -973,8 +971,6 @@ contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, Z
         require(numberOfTokens <= MAX_ZINAR_MINT, "max exceeded");
         require(totalSupply().add(numberOfTokens) <= MAX_ZINAR1, "Purchase exceeds max supply");
         require(msg.value >= zinar1price.mul(numberOfTokens), "enter BNB value");
-
-        zinar1Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -994,8 +990,6 @@ contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, Z
         require(totalSupply().add(numberOfTokens) <= MAX_ZINAR2, "Purchase exceeds max supply");
         require(msg.value >= zinar2price.mul(numberOfTokens), "enter BNB value");
 
-        zinar2Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
-
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
         for(uint i = tokenId; i < end; i++) {
@@ -1014,8 +1008,6 @@ contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, Z
         require(totalSupply().add(numberOfTokens) <= MAX_ZINAR5, "Purchase exceeds max supply");
         require(msg.value >= zinar5price.mul(numberOfTokens), "enter BNB value");
 
-        zinar5Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
-
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
         for(uint i = tokenId; i < end; i++) {
@@ -1033,8 +1025,6 @@ contract ZinarNFT is ERC721, Ownable, ReentrancyGuard, ZinarWhitelistRefferal, Z
         require(numberOfTokens <= MAX_ZINAR_MINT, "max mint 10");
         require(totalSupply().add(numberOfTokens) <= MAX_ZINAR10, "Purchase exceeds max supply");
         require(msg.value >= zinar10price.mul(numberOfTokens), "enter BNB value");
-
-        zinar10Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);

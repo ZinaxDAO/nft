@@ -7,11 +7,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
-import contractABI from "../../../utils/ZinarNFTtest.json"
+import contractABI from "../../../utils/ZinarLoans.json"
 import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
 
 const NftLoansModal = (props) => {
-  const LOAN_CONTRACT_ADDRESS = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
+  const LOAN_CONTRACT_ADDRESS = "0xD9687D120720Fc649a448784b05077E3a4e929C5";
+  const NFT_CONTRACT_ADDRESS = "0x161ED8dc509bDAE1b7FAaaD5b48269bC7c283c05";
   const [zinarNft, setZinarNft] = useState([]);
   const { setNftLoansModal } = props;
 
@@ -46,8 +47,8 @@ const NftLoansModal = (props) => {
       loanAmount, 
       nftId, 
       InterestRate, 
-      LOAN_CONTRACT_ADDRESS,
-      {value: ethers.utils.parseEther(loanAmount)}
+      NFT_CONTRACT_ADDRESS,
+      {value: ethers.utils.parseEther("0.05")}
       );
     const receipt = await takeLoan.wait();
 
@@ -61,8 +62,8 @@ const NftLoansModal = (props) => {
 
   const beginLoan = async() =>{
     try {
-      nfts.map((nft) => {
-        takeZinarLoan(0.1, nft.id, 1500);
+      zinarNft.map((nft) => {
+        takeZinarLoan(ethers.utils.parseEther("0.1"), nft.id, "1500");
       })
     }catch(error) {
       console.log(error)

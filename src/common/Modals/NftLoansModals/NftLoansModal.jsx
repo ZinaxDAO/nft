@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import "./NftLoansModal.css";
 import "../NftModals/NftModals.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import nfts from "../../nfts/nfts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -43,13 +42,17 @@ const NftLoansModal = (props) => {
     const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
     console.log('Accessing wallet to pay gas');
 
+    const adminFee = await contract.adminFeeInMatic();
+    const adminFeeInMatic = adminFee.toString();
+    console.log(adminFeeInMatic);
+
     const takeLoan = await contract.beginLoan(
       loanAmount, 
       nftId, 
       InterestRate, 
       NFT_CONTRACT_ADDRESS,
-      {value: ethers.utils.parseEther("0.05")}
-      );
+      {value: adminFeeInMatic}
+    );
     const receipt = await takeLoan.wait();
 
     if (receipt.status === 1) {
@@ -62,7 +65,7 @@ const NftLoansModal = (props) => {
 
   const beginLoan = async() =>{
     try {
-      zinarNft.map((nft) => {
+      zinarNft.forEach((nft) => {
         takeZinarLoan(ethers.utils.parseEther("0.1"), nft.id, "1500");
       })
     }catch(error) {

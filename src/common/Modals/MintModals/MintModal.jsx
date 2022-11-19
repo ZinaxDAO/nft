@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./MintModal.css";
 import "../NftModals/NftModals.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
@@ -36,68 +36,86 @@ const MintModal = (props) => {
     console.log('Accessing wallet to pay gas');
     
     if(nftName === "0.5 Zinar NFT"){
-      // run mint function
-      const  mintTx= await contract.mintZinar05(quantity, {value: ethers.utils.parseEther(totalPrice)});
-      const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      try {
+        // run mint function
+        const  mintTx= await contract.mintZinar05(quantity, {value: ethers.utils.parseEther(totalPrice)});
+        const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-      // if the contract is mined successfully, do the following:
-      if (receipt.status === 1) {
-        SuccessAlerts();
-        
-      } else {
-        FailedAlerts();
+        // if the contract is mined successfully, do the following:
+        if (receipt.status === 1) {
+          SuccessAlerts();
+          
+        } else {
+          FailedAlerts();
+        }
+      } catch (error) {
+        console.log(error)
       }
     }else if(nftName === "1 Zinar NFT"){
-      // run mint function
-      const mintTx= await contract.mintZinar1(quantity, {value: ethers.utils.parseEther(totalPrice)});
-      const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      try {
+        // run mint function
+        const mintTx= await contract.mintZinar1(quantity, {value: ethers.utils.parseEther(totalPrice)});
+        const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-      // if the contract is mined successfully, do the following:
-      if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
-        
-      } else {
-        alert("Transaction failed! Please try again");
+        // if the contract is mined successfully, do the following:
+        if (receipt.status === 1) {
+          alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
+          
+        } else {
+          alert("Transaction failed! Please try again");
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
     else if(nftName === "2 Zinar NFT"){
-    // run mint function
-      const mintTx= await contract.mintZinar2(quantity, {value: ethers.utils.parseEther(totalPrice)});
-      const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      try {
+        // run mint function
+        const mintTx= await contract.mintZinar2(quantity, {value: ethers.utils.parseEther(totalPrice)});
+        const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-      // if the contract is mined successfully, do the following:
-      if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
-        
-      } else {
-        alert("Transaction failed! Please try again");
+        // if the contract is mined successfully, do the following:
+        if (receipt.status === 1) {
+          alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
+          
+        } else {
+          alert("Transaction failed! Please try again");
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
-  
     else if(nftName === "5 Zinar NFT"){
-      // run mint function
-      const mintTx= await contract.mintZinar5(quantity, {value: ethers.utils.parseEther(totalPrice)});
-      const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      try {
+        // run mint function
+        const mintTx= await contract.mintZinar5(quantity, {value: ethers.utils.parseEther(totalPrice)});
+        const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-       // if the contract is mined successfully, do the following:
-      if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
-      } else {
-        alert("Transaction failed! Please try again");
+        // if the contract is mined successfully, do the following:
+        if (receipt.status === 1) {
+          alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
+        } else {
+          alert("Transaction failed! Please try again");
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
-  
     else if(nftName === "10 Zinar NFT"){
-      // run mint function
-      const  mintTx= await contract.mintZinar10(quantity, {value: ethers.utils.parseEther(totalPrice)});
-      const receipt = await mintTx.wait(); // wait for the transaction to be mined
+      try {
+        // run mint function
+        const  mintTx= await contract.mintZinar10(quantity, {value: ethers.utils.parseEther(totalPrice)});
+        const receipt = await mintTx.wait(); // wait for the transaction to be mined
 
-      // if the contract is mined successfully, do the following:
-      if (receipt.status === 1) {
-        alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
-        
-      } else {
-        alert("Transaction failed! Please try again");
+        // if the contract is mined successfully, do the following:
+        if (receipt.status === 1) {
+          alert("Zinar NFT minted! https://mumbai.polygonscan.com/tx/"+mintTx.hash);
+          
+        } else {
+          alert("Transaction failed! Please try again");
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   } 
@@ -108,7 +126,7 @@ const MintModal = (props) => {
 
 		try {
       let nftName;
-      nfts.map((nft) => {
+      nfts.forEach((nft) => {
         nftName = nft.name;
         chooseNft(nftName);
       })

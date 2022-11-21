@@ -44,15 +44,15 @@ const DashboardMenu = () => {
             </div>
           </div>
 
-          <div onClick={() => setNftStakingModal(true)}>
-            <p>nft staking</p>
+          <div onClick={() => setMintModal(true)}>
+            <p>mint zinar</p>
             <div>
               <img src={Star} alt="star" className="star-image" />
             </div>
           </div>
 
-          <div onClick={() => setMintModal(true)}>
-            <p>mint zinar</p>
+          <div onClick={() => setNftStakingModal(true)}>
+            <p>nft staking</p>
             <div>
               <img src={Star} alt="star" className="star-image" />
             </div>

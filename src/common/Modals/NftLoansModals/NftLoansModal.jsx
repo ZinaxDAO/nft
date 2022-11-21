@@ -63,7 +63,7 @@ const NftLoansModal = (props) => {
     }
   }
 
-  const beginLoan = async() =>{
+  const beginLoan = async() => {
     try {
       zinarNft.forEach((nft) => {
         takeZinarLoan(ethers.utils.parseEther("0.1"), nft.id, "1500");
@@ -71,6 +71,33 @@ const NftLoansModal = (props) => {
     }catch(error) {
       console.log(error)
     }
+  }
+
+  const paybackZinarLoan = async(loanId) => {
+    const { ethereum } = window;
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    // connect to the contract you want to execute
+    const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
+    console.log('Accessing wallet to pay gas');
+
+    const adminFee = await contract.adminFeeInMatic();
+    const adminFeeInMatic = adminFee.toString();
+    console.log(adminFeeInMatic);
+
+    const payLoan = await contract.payBackLoan(
+      loanId,
+      {value: adminFeeInMatic}
+    );
+    const receipt = await payLoan.wait();
+
+    if (receipt.status === 1) {
+      alert("Loan started! https://mumbai.polygonscan.com/tx/"+payLoan.hash);
+      
+    } else {
+      alert("Transaction failed! Please try again");
+    }
+
   }
 
   return (

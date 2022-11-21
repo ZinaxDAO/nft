@@ -8,7 +8,7 @@ import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { fetchNativeBalance } from "../../../services/alchemy-sdk";
-import { getConnectedAccount } from "../../../services/authentication";
+import { connectWallet } from "../../../services/authentication";
 
 const DashboardIntro = () => {
   const [balance, setBalance] = useState('');
@@ -20,7 +20,7 @@ const DashboardIntro = () => {
   };
 
   const getAccount = async () => {
-    const accountAddress = await getConnectedAccount();
+    const accountAddress = await connectWallet();
     setAddress(accountAddress);
   }
 

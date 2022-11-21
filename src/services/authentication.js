@@ -97,24 +97,4 @@ const switchNetwork = async () => {
     } 
 }
 
-const getConnectedAccount = async () => {
-    let account;
-    try {
-        const { ethereum } = window;
-
-        if(!ethereum) {
-            alert("Get Metamask -> https://metamask.io/");
-            return;
-        }
-
-        // request access to account 
-        const accounts = await ethereum.request({ method: 'eth_accounts' });
-        account = accounts[0];
-        console.log('Wallet Address', accounts[0]);
-        return account;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-export { connectWallet, checkIfWalletIsConnected, switchNetwork, getConnectedAccount };
+export { connectWallet, checkIfWalletIsConnected, switchNetwork };

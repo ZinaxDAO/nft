@@ -14,22 +14,9 @@ const Navbar = () => {
   const [currentAccount, setCurrentAccount] = useState('');
   const [network, setNetwork] = useState('');
 
-  const connectWallet = async() => {
-      try {
-          const { ethereum } = window;
-  
-          if(!ethereum) {
-              alert("Get Metamask -> https://metamask.io/");
-              return;
-          }
-  
-          // request access to account 
-          const accounts = await ethereum.request({method: 'eth_requestAccounts'});
-          setCurrentAccount(accounts[0]);
-          console.log('Connected', accounts[0]);
-      } catch (error) {
-          console.log(error);
-      }
+  const getConnectedAccount = async() => {
+    const accountAddress = await connectWallet();
+    setAddress(accountAddress);
   }
   
   // Checks if a wallet is connected to the web app
@@ -102,7 +89,7 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-                <button className="nav-btn" onClick={connectWallet}>
+                <button className="nav-btn" onClick={getConnectedAccount}>
                   {currentAccount ? <p> {currentAccount.slice(0,4)}...{currentAccount.slice(-4)} </p> : <p>Connect</p>}
                   <span>
                     <img src={ConnectImg} alt="connect" />

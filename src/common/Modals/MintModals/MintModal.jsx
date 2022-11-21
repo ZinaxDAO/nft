@@ -35,7 +35,7 @@ const MintModal = (props) => {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
     console.log('Accessing wallet to pay gas');
     
-    if(nftName === "0.5 Zinar NFT"){
+    if(nftName == "0.5 Zinar NFT"){
       try {
         // run mint function
         const  mintTx= await contract.mintZinar05(quantity, {value: ethers.utils.parseEther(totalPrice)});
@@ -51,7 +51,7 @@ const MintModal = (props) => {
       } catch (error) {
         console.log(error)
       }
-    }else if(nftName === "1 Zinar NFT"){
+    }else if(nftName == "1 Zinar NFT"){
       try {
         // run mint function
         const mintTx= await contract.mintZinar1(quantity, {value: ethers.utils.parseEther(totalPrice)});
@@ -68,7 +68,7 @@ const MintModal = (props) => {
         console.log(error);
       }
     }
-    else if(nftName === "2 Zinar NFT"){
+    else if(nftName == "2 Zinar NFT"){
       try {
         // run mint function
         const mintTx= await contract.mintZinar2(quantity, {value: ethers.utils.parseEther(totalPrice)});
@@ -85,7 +85,7 @@ const MintModal = (props) => {
         console.log(error);
       }
     }
-    else if(nftName === "5 Zinar NFT"){
+    else if(nftName == "5 Zinar NFT"){
       try {
         // run mint function
         const mintTx= await contract.mintZinar5(quantity, {value: ethers.utils.parseEther(totalPrice)});
@@ -101,7 +101,7 @@ const MintModal = (props) => {
         console.log(error);
       }
     }
-    else if(nftName === "10 Zinar NFT"){
+    else if(nftName == "10 Zinar NFT"){
       try {
         // run mint function
         const  mintTx= await contract.mintZinar10(quantity, {value: ethers.utils.parseEther(totalPrice)});

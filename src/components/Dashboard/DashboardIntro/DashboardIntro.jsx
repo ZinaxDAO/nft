@@ -20,14 +20,16 @@ const DashboardIntro = () => {
   };
 
   const getAccount = async () => {
-    const accountAddress = await connectWallet();
-    setAddress(accountAddress);
+    const accountAddress = await connectWallet(setAddress);
   }
 
   useEffect(() => {
-    getNativeBalance();
-    
-  }, [getAccount()]);
+    getAccount(); if (address) {
+      getNativeBalance();
+    } else {
+      console.log("Couldn not retrieve native balance");
+    }
+  });
 
   return (
     <div className="dashboard-intro">

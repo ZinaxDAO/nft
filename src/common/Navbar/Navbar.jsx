@@ -4,63 +4,27 @@ import "./Navbar.css";
 import { networks } from "../../utils/networks";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
-import { connectWallet, checkIfWalletIsConnected, switchNetwork } from "../../services/authentication";
+import {
+  connectWallet,
+  checkIfWalletIsConnected,
+  switchNetwork,
+} from "../../services/authentication";
 
 const Navbar = () => {
   const polygonChainId = "0x13881";
-  
-  const [address, setAddress] = useState('');
-  const [chainId, setChainId] = useState('');
-  const [currentAccount, setCurrentAccount] = useState('');
-  const [network, setNetwork] = useState('');
 
-  const getConnectedAccount = async() => {
-    const accountAddress = await connectWallet();
-    setAddress(accountAddress);
-  }
-  
-  // Checks if a wallet is connected to the web app
-  const checkIfWalletIsConnected = async () => {
-      // First make sure user has access to window.ethereum
-      const { ethereum } = window;
-  
-      if (!ethereum) {
-          console.log("Make sure you have MetaMask!");
-          return;
-      } else {
-          console.log("We have the ethereum object", ethereum);
-      }
-  
-      // check if we're authorized to access user's wallet
-      const accounts = await ethereum.request({ method: 'eth_accounts' });
-  
-      // if user has more than one authorized account, grab the first one
-      if(accounts.length !== 0) {
-          const account = accounts[0];
-          console.log('Found an authorized account', account);
-          setCurrentAccount(account);
-      } else{
-          console.log('No authorized account found');
-      }
-  
-      // set the network using the chainId
-      const chainId = await ethereum.request({ method: 'eth_chainId' });
-      setNetwork(networks[chainId]);
-  
-      ethereum.on('chainChanged', handleChainChanged);
-  
-      function handleChainChanged(_chainId){
-          window.location.reload();
-      }
-  }
+  const [address, setAddress] = useState("");
+  const [chainId, setChainId] = useState("");
+  const [currentAccount, setCurrentAccount] = useState("");
+  const [network, setNetwork] = useState("");
 
   useEffect(() => {
-    checkIfWalletIsConnected();
-    if(network !== 'Polygon Mumbai Testnet'){
+    checkIfWalletIsConnected(setCurrentAccount, setNetwork);
+    console.log("clicked");
+    if (network !== "Polygon Mumbai Testnet") {
       switchNetwork();
-    };
-  }, []);
-
+    }
+  }, [network]);
   const [open, setOpen] = useState(false);
   return (
     <header className="header">
@@ -89,15 +53,26 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-                <button className="nav-btn" onClick={getConnectedAccount}>
-                  {currentAccount ? <p> {currentAccount.slice(0,4)}...{currentAccount.slice(-4)} </p> : <p>Connect</p>}
-                  <span>
-                    <img src={ConnectImg} alt="connect" />
-                  </span>
-                </button>
+              <button
+                className="nav-btn"
+                onClick={() => {
+                  connectWallet(setCurrentAccount);
+                }}
+              >
+                {currentAccount ? (
+                  <p>
+                    {" "}
+                    {currentAccount.slice(0, 4)}...{currentAccount.slice(-4)}{" "}
+                  </p>
+                ) : (
+                  <p>Connect</p>
+                )}
+                <span>
+                  <img src={ConnectImg} alt="connect" />
+                </span>
+              </button>
             </li>
           </ul>
-          
         </div>
 
         <div

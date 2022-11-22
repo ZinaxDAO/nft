@@ -6,14 +6,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
-import contractABI from "../../../utils/ZinarLoans.json"
+import contractABI from "../../../utils/ZinarLoans.json";
+import nftcontractABI from "../../../utils/ZinarNFTtest.json";
 import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
 
 const NftLoansModal = (props) => {
-  const LOAN_CONTRACT_ADDRESS = "0xD9687D120720Fc649a448784b05077E3a4e929C5";
+  const LOAN_CONTRACT_ADDRESS = "0xE73207f981F7787170B4fC6C3348D40974974dae";
   const NFT_CONTRACT_ADDRESS = "0x161ED8dc509bDAE1b7FAaaD5b48269bC7c283c05";
   const [zinarNft, setZinarNft] = useState([]);
   const { setNftLoansModal } = props;
+  const { ethereum } = window;
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+  // connect to the contract you want to execute
+  const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
 
   const settings = {
     dots: false,
@@ -34,32 +40,49 @@ const NftLoansModal = (props) => {
     getNfts();
   }, []);
 
+  const getApprovalReceipt = async (_nftId) => {
+    const nftContract = new ethers.Contract(NFT_CONTRACT_ADDRESS, nftcontractABI.abi, signer);
+    try { 
+      const approveTx = await nftContract.approve(LOAN_CONTRACT_ADDRESS, _nftId);
+      let receipt = approveTx.wait();
+      return receipt;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    // connect to the contract you want to execute
-    const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
-    console.log('Accessing wallet to pay gas');
 
     const adminFee = await contract.adminFeeInMatic();
     const adminFeeInMatic = adminFee.toString();
     console.log(adminFeeInMatic);
 
-    const takeLoan = await contract.beginLoan(
-      loanAmount, 
-      nftId, 
-      InterestRate, 
-      NFT_CONTRACT_ADDRESS,
-      {value: adminFeeInMatic}
-    );
-    const receipt = await takeLoan.wait();
-
-    if (receipt.status === 1) {
-      alert("Loan started! https://mumbai.polygonscan.com/tx/"+takeLoan.hash);
-      
-    } else {
-      alert("Transaction failed! Please try again");
+    try {
+      const approvalReceipt = await getApprovalReceipt(nftId);
+      if (!approvalReceipt) {
+        return false;
+      } else if (approvalReceipt.status === 1) {
+        console.log('Accessing wallet to pay gas');
+        const takeLoan = await contract.beginLoan(
+          loanAmount, 
+          nftId, 
+          InterestRate, 
+          NFT_CONTRACT_ADDRESS,
+          {value: adminFeeInMatic}
+        );
+        const receipt = await takeLoan.wait();
+    
+        if (receipt.status === 1) {
+          alert("Loan started! https://mumbai.polygonscan.com/tx/"+takeLoan.hash);
+          
+        } else {
+          alert("Transaction failed! Please try again");
+        }
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -74,11 +97,6 @@ const NftLoansModal = (props) => {
   }
 
   const paybackZinarLoan = async(loanId) => {
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    // connect to the contract you want to execute
-    const contract = new ethers.Contract(LOAN_CONTRACT_ADDRESS, contractABI.abi, signer);
     console.log('Accessing wallet to pay gas');
 
     const adminFee = await contract.adminFeeInMatic();

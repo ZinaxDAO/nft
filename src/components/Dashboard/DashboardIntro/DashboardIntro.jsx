@@ -20,7 +20,7 @@ const DashboardIntro = () => {
   };
 
   const getAccount = async () => {
-    const accountAddress = await connectWallet(setAddress);
+    await connectWallet(setAddress);
   }
 
   useEffect(() => {

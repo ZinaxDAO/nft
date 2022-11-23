@@ -12,7 +12,7 @@ const connectWallet = async (set) => {
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       account = accounts[0];
       console.log("Connected", accounts[0]);
-      set(accounts[0]);
+      set(account);
       // return account;
     } catch (error) {
       console.log(error);
@@ -22,7 +22,6 @@ const connectWallet = async (set) => {
   // Checks if a wallet is connected to the web app
   const checkIfWalletIsConnected = async (setAccount, setNetwork) => {
     let network;
-    let accountConnected;
     const { ethereum } = window;
   
     if (!ethereum) {

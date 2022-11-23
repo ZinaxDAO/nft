@@ -9,6 +9,7 @@ import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarLoans.json";
 import nftcontractABI from "../../../utils/ZinarNFTtest.json";
 import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
+import { getInterestRate, setIntRate } from "../../../services/zinarLoanContractService";
 
 const NftLoansModal = (props) => {
   const LOAN_CONTRACT_ADDRESS = "0xE73207f981F7787170B4fC6C3348D40974974dae";
@@ -52,6 +53,7 @@ const NftLoansModal = (props) => {
   }
 
   const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
+    console.log(InterestRate);
 
     const adminFee = await contract.adminFeeInMatic();
     const adminFeeInMatic = adminFee.toString();
@@ -89,7 +91,7 @@ const NftLoansModal = (props) => {
   const beginLoan = async() => {
     try {
       zinarNft.forEach((nft) => {
-        takeZinarLoan(ethers.utils.parseEther("0.1"), nft.id, "1500");
+        takeZinarLoan(ethers.utils.parseEther("0.1"), nft.id, setIntRate(nft.name));
       })
     }catch(error) {
       console.log(error)

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { networks } from "../../utils/networks";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
 import {
@@ -11,10 +10,7 @@ import {
 } from "../../services/authentication";
 
 const Navbar = () => {
-  const polygonChainId = "0x13881";
-
-  const [address, setAddress] = useState("");
-  const [chainId, setChainId] = useState("");
+  // const [chainId, setChainId] = useState("");
   const [currentAccount, setCurrentAccount] = useState("");
   const [network, setNetwork] = useState("");
 

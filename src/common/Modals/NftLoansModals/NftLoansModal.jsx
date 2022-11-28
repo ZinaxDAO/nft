@@ -9,7 +9,7 @@ import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarLoans.json";
 import nftcontractABI from "../../../utils/ZinarNFTtest.json";
 import { fetchNFTsForContract, fetchNativeBalance } from "../../../services/alchemy-sdk";
-import { setIntRate } from "../../../services/zinarLoanContractService";
+import { setIntRate, getAdminFee } from "../../../services/zinarLoanContractService";
 import { setLoanPrincipal } from "../../../services/mintNftContractService";
 
 const NftLoansModal = (props) => {
@@ -54,11 +54,8 @@ const NftLoansModal = (props) => {
   }
 
   const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
+    await InterestRate;
     console.log(InterestRate);
-
-    const adminFee = await contract.adminFeeInMatic();
-    const adminFeeInMatic = adminFee.toString();
-    console.log(adminFeeInMatic);
 
     try {
       const approvalReceipt = await getApprovalReceipt(nftId);
@@ -71,7 +68,7 @@ const NftLoansModal = (props) => {
           nftId, 
           InterestRate, 
           NFT_CONTRACT_ADDRESS,
-          {value: adminFeeInMatic}
+          {value: getAdminFee()}
         );
         const receipt = await takeLoan.wait();
     
@@ -142,7 +139,7 @@ const NftLoansModal = (props) => {
                   <div>
                     <div>BUSD Balance: </div>
                     <div>NFT ID: {nft.id}</div>
-                    <div>Loaned Amount: {setLoanPrincipal(nft.name)}</div>
+                    <div>Loaned Amount: </div>
                     <div>Accrued Interest</div>
                     <button onClick={beginLoan}>Borrow Now</button>
                   </div>

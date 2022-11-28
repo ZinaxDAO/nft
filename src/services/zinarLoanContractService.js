@@ -31,7 +31,7 @@ const getInterestRate = async() => {
 }
 
 const setIntRate = async(name) => {
-    getInterestRate();
+    await getInterestRate();
 
     const intRate = name === "0.5 Zinar" ? intRateArray[0] : 
     name === "1 Zinar" ? intRateArray[1] : 
@@ -43,4 +43,12 @@ const setIntRate = async(name) => {
     return intRate;
 }
 
-export{getInterestRate, setIntRate};
+const getAdminFee = async() => {
+    const adminFee = await contract.adminFeeInMatic();
+    const adminFeeInMatic = adminFee.toString();
+    console.log(adminFeeInMatic);
+
+    return adminFeeInMatic;
+}
+
+export{getInterestRate, setIntRate, getAdminFee};

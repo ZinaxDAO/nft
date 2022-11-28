@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { ethers } from "ethers";
 import contractABI from "../../../utils/ZinarLoans.json";
 import nftcontractABI from "../../../utils/ZinarNFTtest.json";
-import {fetchNFTsForContract} from "../../../services/alchemy-sdk";
+import { fetchNFTsForContract, fetchNativeBalance } from "../../../services/alchemy-sdk";
 import { setIntRate } from "../../../services/zinarLoanContractService";
 import { setLoanPrincipal } from "../../../services/mintNftContractService";
 
@@ -140,9 +140,9 @@ const NftLoansModal = (props) => {
                   <video autoPlay loop src={nft.image} width={250} height={250}/>
                 </div>
                   <div>
-                    <div>BUSD Balance</div>
+                    <div>BUSD Balance: </div>
                     <div>NFT ID: {nft.id}</div>
-                    <div>Loaned Amount</div>
+                    <div>Loaned Amount: {setLoanPrincipal(nft.name)}</div>
                     <div>Accrued Interest</div>
                     <button onClick={beginLoan}>Borrow Now</button>
                   </div>

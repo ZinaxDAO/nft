@@ -36,6 +36,7 @@ const getMintPrice = async() => {
 const setLoanPrincipal = async(name) => {
     await getMintPrice();
 
+    /**
     const percentage = name === "5 Zinar" || name === "10 Zinar" ? "0.7" : "0.5";
     console.log(percentage);
 
@@ -45,15 +46,28 @@ const setLoanPrincipal = async(name) => {
     name === "5 Zinar" ? mintPriceArray[3] :
     mintPriceArray[4];
     console.log(mintPrice);
+    */
 
-    const loanPrincipal = percentage * mintPrice;
-    const loanPrincipalString = loanPrincipal.toString();
+    let loanPrincipal;
 
-    const zinar05Principal = Math.floor(Math.random() * (parseInt(mintPriceArray[3]) - parseInt(mintPriceArray[1])) + parseInt(mintPriceArray[1]));
+    if (name === "0.5 Zinar") {
+        loanPrincipal = Math.floor(Math.random() * (parseInt(mintPriceArray[1]) - parseInt(mintPriceArray[0])) + parseInt(mintPriceArray[0]));
+    } else if (name === "1 Zinar") {
+        loanPrincipal = Math.floor(Math.random() * (parseInt(mintPriceArray[2]) - parseInt(mintPriceArray[1])) + parseInt(mintPriceArray[1]));
+    } else if (name === "2 Zinar") {
+        loanPrincipal = Math.floor(Math.random() * (parseInt(mintPriceArray[3]) - parseInt(mintPriceArray[2])) + parseInt(mintPriceArray[2]));
+    } else if (name === "5 Zinar") {
+        loanPrincipal = Math.floor(Math.random() * (parseInt(mintPriceArray[4]) - parseInt(mintPriceArray[3])) + parseInt(mintPriceArray[3]));
+    } else {
+        loanPrincipal = mintPriceArray[4];
+    }
 
-    console.log(zinar05Principal);
-    console.log(loanPrincipalString);
-    return zinar05Principal;
+    // const loanPrincipal = percentage * mintPrice;
+    // const loanPrincipalString = loanPrincipal.toString();
+
+    console.log(loanPrincipal);
+    // console.log(loanPrincipalString);
+    return loanPrincipal;
 }
 
 export {getMintPrice, setLoanPrincipal};

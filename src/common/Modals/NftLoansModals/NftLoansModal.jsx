@@ -86,11 +86,10 @@ const NftLoansModal = (props) => {
     }
   }
 
-  const beginLoan = async() => {
+  const beginLoan = async(nft = {}) => {
+    let selectedNft = {...nft};
     try {
-      zinarNft.forEach((nft) => {
-        takeZinarLoan(setLoanPrincipal(nft.name), nft.id, setIntRate(nft.name));
-      })
+      takeZinarLoan(setLoanPrincipal(selectedNft.name), selectedNft.id, setIntRate(selectedNft.name));
     }catch(error) {
       console.log(error)
     }
@@ -98,14 +97,10 @@ const NftLoansModal = (props) => {
 
   const paybackZinarLoan = async(loanId) => {
     console.log('Accessing wallet to pay gas');
-
-    const adminFee = await contract.adminFeeInMatic();
-    const adminFeeInMatic = adminFee.toString();
-    console.log(adminFeeInMatic);
-
+    
     const payLoan = await contract.payBackLoan(
       loanId,
-      {value: adminFeeInMatic}
+      {value: getAdminFee()}
     );
     const receipt = await payLoan.wait();
 
@@ -129,19 +124,19 @@ const NftLoansModal = (props) => {
         </div>
         <div className="modalContent">
           <Slider {...settings}>
-            {zinarNft.map((nft) => (
+            {zinarNft.map(nft => (
               <div className="nftLoansModal">
                 <div className="nftLoansModalTitle">{nft.name}</div>
                 <div className="nftLoansModalContent">
-                <div key={nft.id}>
-                  <video autoPlay loop src={nft.image} width={250} height={250}/>
-                </div>
+                  <div key={nft.id}>
+                    <video autoPlay loop src={nft.image} width={250} height={250}/>
+                  </div>
                   <div>
                     <div>BUSD Balance: </div>
                     <div>NFT ID: {nft.id}</div>
                     <div>Loaned Amount: </div>
                     <div>Accrued Interest</div>
-                    <button onClick={beginLoan}>Borrow Now</button>
+                    <button onClick={() => beginLoan(nft)}>Borrow Now</button>
                   </div>
                 </div>
               </div>

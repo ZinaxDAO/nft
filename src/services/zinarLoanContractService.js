@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import contractABI from "C:/Users/user/Desktop/Code/nft/src/utils/ZinarLoans.json";
-import nftcontractABI from "C:/Users/user/Desktop/Code/nft/src/utils/ZinarNFTtest.json";
+import contractABI from "../utils/ZinarLoans.json";
+import nftcontractABI from "../utils/ZinarNFTtest.json";
 const LOAN_CONTRACT_ADDRESS = "0xc554a98CF397cC2C3b4c4477267405824f3f1548";
 const NFT_CONTRACT_ADDRESS = "0x161ED8dc509bDAE1b7FAaaD5b48269bC7c283c05";
 

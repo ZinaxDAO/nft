@@ -1,11 +1,12 @@
 import { useState } from "react";
 import './NftLoansModalBox.css';
+import RepayLoanModalBox from "./RepayLoan";
 import { setLoanPrincipal } from "../../../../services/mintNftContractService";
 import { takeZinarLoan, setIntRate } from "../../../../services/zinarLoanContractService";
 
 function TakeLoanModalBox(props) {
+  const [loanSuccess, setLoanSuccess] = useState(false);
   const beginLoan = async() => {
-    //let selectedNft = {...nft};
     try {
         takeZinarLoan(setLoanPrincipal(props.nftName), props.nftId, setIntRate(props.nftName));
     }catch(error) {

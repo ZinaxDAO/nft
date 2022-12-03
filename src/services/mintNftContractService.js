@@ -28,16 +28,17 @@ const getMintPrice = async() => {
     const zinar10Price = await contract.zinar10price();
     const zinar10PriceString = ethers.utils.formatEther(zinar10Price);
 
-    mintPriceArray.push(zinar05PriceString, zinar1PriceString, zinar2PriceString, zinar5PriceString, zinar10PriceString);
+    while (mintPriceArray.length < 5) {
+        mintPriceArray.push(zinar05PriceString, zinar1PriceString, zinar2PriceString, zinar5PriceString, zinar10PriceString);   
+    }
 
     console.log(mintPriceArray);
 }
 
 const setLoanPrincipal = async(name) => {
     await getMintPrice();
-
-    /**
-    const percentage = name === "5 Zinar" || name === "10 Zinar" ? "0.7" : "0.5";
+    
+    const percentage = name === "5 Zinar" || name === "10 Zinar" ? "0.7" : "1";
     console.log(percentage);
 
     const mintPrice = name === "0.5 Zinar" ? mintPriceArray[0] : 
@@ -46,8 +47,7 @@ const setLoanPrincipal = async(name) => {
     name === "5 Zinar" ? mintPriceArray[3] :
     mintPriceArray[4];
     console.log(mintPrice);
-    */
-
+    
     let loanPrincipal;
 
     if (name === "0.5 Zinar") {
@@ -62,12 +62,12 @@ const setLoanPrincipal = async(name) => {
         loanPrincipal = mintPriceArray[4];
     }
 
-    // const loanPrincipal = percentage * mintPrice;
-    // const loanPrincipalString = loanPrincipal.toString();
+    const altLoanPrincipal = percentage * mintPrice;
+    const parseLoanPrincipal = ethers.utils.parseEther(altLoanPrincipal.toString());
+    const loanPrincipalString = parseLoanPrincipal.toString();
 
-    console.log(loanPrincipal);
-    // console.log(loanPrincipalString);
-    return loanPrincipal;
+    console.log(loanPrincipalString);
+    return loanPrincipalString;
 }
 
 export {getMintPrice, setLoanPrincipal};

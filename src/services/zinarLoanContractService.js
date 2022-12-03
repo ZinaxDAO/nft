@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import contractABI from "../utils/ZinarLoans.json";
 import nftcontractABI from "../utils/ZinarNFTtest.json";
-const LOAN_CONTRACT_ADDRESS = "0xc554a98CF397cC2C3b4c4477267405824f3f1548";
+const LOAN_CONTRACT_ADDRESS = "0x7afd255F3a5223822f1B450d32AB2C353B0cD349";
 const NFT_CONTRACT_ADDRESS = "0x161ED8dc509bDAE1b7FAaaD5b48269bC7c283c05";
 
 const { ethereum } = window;
@@ -28,7 +28,9 @@ const getInterestRate = async() => {
   const zinar10IntRate = await contract.zinar10InterestRate();
   const zinar10Rate = parseInt(zinar10IntRate._hex).toString();
 
-  intRateArray.push(zinar05Rate, zinar1Rate, zinar2Rate, zinar5Rate, zinar10Rate);
+  while (intRateArray.length < 5) {
+    intRateArray.push(zinar05Rate, zinar1Rate, zinar2Rate, zinar5Rate, zinar10Rate);
+  }
   console.log(intRateArray);
 }
 
@@ -97,12 +99,27 @@ const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
   }
 }
 
+const getPayOffAmount = async (loanId) => {
+  try {
+    const payOffAmount = await contract.getPayoffAmount(loanId);
+    const receipt = await payOffAmount.wait();
+
+    if (receipt.status === 1) {
+      return payOffAmount.toString();
+    } else {}
+  } catch (error) {
+    console.log(error)
+  }  
+}
+
 const paybackZinarLoan = async(loanId) => {
+  const totalAmount = getPayOffAmount(loanId) + getAdminFee();
+  console.log (totalAmount);
   console.log('Accessing wallet to pay gas');
   
   const payLoan = await contract.payBackLoan(
     loanId,
-    {value: getAdminFee()}
+    {value: totalAmount}
   );
   const receipt = await payLoan.wait();
 
@@ -114,4 +131,4 @@ const paybackZinarLoan = async(loanId) => {
   }
 }
 
-export {getInterestRate, setIntRate, getAdminFee, takeZinarLoan, paybackZinarLoan};
+export {getInterestRate, setIntRate, getAdminFee, takeZinarLoan, getPayOffAmount, paybackZinarLoan};

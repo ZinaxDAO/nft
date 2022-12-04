@@ -10,7 +10,7 @@ The Zinar NFT is built using
 - IPFS to save and retrieve the token URI 
 
 ## The Use of the Product
-Zinar NFTs are asset-backed NFTs which can be minted and staked to earn tokens or used as collateral for crypto loans.
+Zinar NFTs are asset-backed NFTs that can be minted and staked to earn tokens or used as collateral for crypto loans.
 The need to create better use cases for NFTs in the DeFi ecosystem and web3 in general. The Zinar NFT is the first step to bring users closer to NFTs in DeFi in the Zinari ecosystem. We will continue to grow the project and introduce more use cases as we expand.
 
 - Mint Zinar NFTs
@@ -18,7 +18,7 @@ The need to create better use cases for NFTs in the DeFi ecosystem and web3 in g
 - Stake NFTs to earn token rewards
 - Use NFTs to collect loans from a liquidity pool
 
-## Brief Description of What it does 
+## Brief Description of the Product 
 The Zinar NFT Dapp is made up of two main parts, The Solidity smart contracts that hold the logic for minting, staking, loaning NFTs & referring people, and the react frontend.
 
 The ZinarNFT contract is a contract that allows the creation and sale of non-fungible tokens (NFTs) called "Zinar" on the Ethereum blockchain. The contract is an implementation of the ERC-721 standard and inherits from the ZinarWhitelistRefferal and ZinarSetter contracts. The contract is also a ReentrancyGuard, which means that it prevents reentrant calls. The contract defines a mapping for the URI of each Zinar NFT and uses a counter to generate a unique token ID for each NFT. The contract defines several functions for minting different types of Zinar NFTs, and these functions require that the sale is active and that the caller is either on the whitelist or has a referral. The contract also defines functions for setting the URI of each type of Zinar NFT and for paying referral commissions.

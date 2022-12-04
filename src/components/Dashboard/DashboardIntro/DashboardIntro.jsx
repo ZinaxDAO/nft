@@ -7,35 +7,29 @@ import Cubes from "../../../assets/images/cubes.png";
 import CubesTwo from "../../../assets/images/cubes-two.png";
 import Star from "../../../assets/images/star.png";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { useMoralisWeb3Api, useMoralis } from "react-moralis";
+import { fetchNativeBalance } from "../../../services/alchemy-sdk";
+import { connectWallet } from "../../../services/authentication";
 
 const DashboardIntro = () => {
-  const Web3Api = useMoralisWeb3Api();
-  const { Moralis, isAuthenticated, user } = useMoralis();
-  const [balance, setBalance] = useState();
+  const [balance, setBalance] = useState('');
   const [address, setAddress] = useState('');
 
-  const fetchNativeBalance = async () => {
-    // get BSC native balance for a given address
-    const options = {
-      chain: "mumbai"
-    };
-    const BNbalance = await Web3Api.Web3API.account.getNativeBalance(options);
-    const balance = Moralis.Units.FromWei(BNbalance.balance);
-    console.log(balance);
-    const finalBalance = Number(balance).toFixed(3);
-    setBalance(finalBalance);
+  const getNativeBalance = async () => {
+    const nativeBalance = await fetchNativeBalance(address);
+    setBalance(nativeBalance);
   };
 
-  useEffect(() => {
-    fetchNativeBalance();
-  }, []);
+  const getAccount = async () => {
+    await connectWallet(setAddress);
+  }
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setAddress(user.attributes.ethAddress);
+    getAccount(); if (address) {
+      getNativeBalance();
+    } else {
+      console.log("Couldn not retrieve native balance");
     }
-  }, [isAuthenticated]);
+  });
 
   return (
     <div className="dashboard-intro">
@@ -61,8 +55,8 @@ const DashboardIntro = () => {
 
           <div>
             <div>
-              { isAuthenticated ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
-              { isAuthenticated ? <h4>{address.slice(0,5)}...{address.slice(-5)}</h4> : <p>Wallet Address</p>}
+              { balance ? <h5>{balance} MATIC</h5> : <h5>MATIC BALANCE</h5> }
+              { address ? <p>{address.slice(0,8)}...{address.slice(-8)}</p> : <p>Wallet Address</p> }
             </div>
             <div>
               <AccountCircleOutlinedIcon

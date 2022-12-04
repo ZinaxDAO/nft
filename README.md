@@ -1,41 +1,30 @@
 # The Zinar NFT
+This repo holds the codes for the frontend and zinar nft contracts.
 
-This repo holds the codes for the frontend and zinar nft contracts. 
+## Tech Stack of the Product
+The Zinar NFT is built using 
+- Solidity for the smart contracts
+- Ethers.js for the smart contract interaction with the frontend
+- ReactJS for the frontend 
+- Alchemy API and SDK to fetch NFT and store NFT metadata on the ReactJS frontend 
+- IPFS to save and retrieve the token URI 
 
-## Inspiration
+## The Use of the Product
+Zinar NFTs are asset-backed NFTs that can be minted and staked to earn tokens or used as collateral for crypto loans.
 The need to create better use cases for NFTs in the DeFi ecosystem and web3 in general. The Zinar NFT is the first step to bring users closer to NFTs in DeFi in the Zinari ecosystem. We will continue to grow the project and introduce more use cases as we expand.
 
-##What it does
-The Zinar NFT Dapp is made up of two main parts, The Solidity smart contracts that hold the logic for minting, staking, loaning NFTs & referring people, and the react frontend.
-
-The Minting contract also holds the referral contract which handles the logic for recording referrals and sending referral bonuses whenever a referred address mints one of the NFTs.
-The staking contract allows users to stake their NFTs and earn token rewards from them and the loaning contract allows NFT hodlers to use their NFTs as collateral for collecting loans from a Liquidity pool.
-
-The react frontend helps users interact with their contract. To do this, it incorporates Ethers.js for interacting with the smart contracts and Moralis for connecting to user wallets and fetching user and contract details.
-The application also makes use of [IPFS to store the NFT media and metadata](https://ipfs.io/ipfs/QmZ8qSUG4MyyWu2CWDoFSki46KktLdNQZyyekaLCeTTFE8)
-
-The application can:
 - Mint Zinar NFTs
 - Record referrals
 - Stake NFTs to earn token rewards
 - Use NFTs to collect loans from a liquidity pool
 
-## Challenges we ran into
-We had to understand and apply a few DeFi concepts while in the process of writing the staking and loaning contracts. It was not an easy process but we came up with logic that works.
+## Brief Description of the Product 
+The Zinar NFT Dapp is made up of two main parts, The Solidity smart contracts that hold the logic for minting, staking, loaning NFTs & referring people, and the react frontend.
 
-Choosing between using fewer tools for the project or making my work easier, We had to decide if we were going to use the Moralis api to handle function calls to the smart contract or stick with Ethers and only use the Moralis NFT api endpoints.
-I’m more conversant with using Ethers.js to make calls to smart contracts, so, I stuck with it.
-Hence, we opted for ease of work where we could have used Moralis to handle everything and eliminate the use of ethers.js.
-Initially I was going to use the Alchemy api, but since I’m more familiar with the Moralis NFT api and preferred how extensive its endpoints are, it felt like a better option for me.
+The ZinarNFT contract is a contract that allows the creation and sale of non-fungible tokens (NFTs) called "Zinar" on the Ethereum blockchain. The contract is an implementation of the ERC-721 standard and inherits from the ZinarWhitelistRefferal and ZinarSetter contracts. The contract is also a ReentrancyGuard, which means that it prevents reentrant calls. The contract defines a mapping for the URI of each Zinar NFT and uses a counter to generate a unique token ID for each NFT. The contract defines several functions for minting different types of Zinar NFTs, and these functions require that the sale is active and that the caller is either on the whitelist or has a referral. The contract also defines functions for setting the URI of each type of Zinar NFT and for paying referral commissions.
 
-## Accomplishments that we're proud of
-The app is still a work in progress, but it works fine! It’s simple to use and you can own an NFT with great use cases in a few clicks!
+The ZinarNFTStaking contract is a contract that allows users to stake their non-fungible tokens (NFTs) in order to earn rewards. The contract is "Ownable", meaning that it has an owner with special privileges, such as the ability to modify the rewards per hour. The contract also uses the ReentrancyGuard contract to prevent reentrant calls. The contract has a mapping that tracks the staked NFTs and another mapping that tracks the addresses of stakers. The contract also has an array of staker addresses. The contract defines several functions for staking and withdrawing NFTs, as well as for claiming rewards.
 
-## What we learned
-We learned to focus on delivering an MVP first. As long as it works and solves the problem it’s intended for, it’s good to go. All other refactoring can come as you scale the app.
-The MVP can help the product team receive user feedback as quickly as possible to iterate and improve the product.
+The ZinarLoans contract defines a struct called Loan that contains details about a loan, such as the loan ID, the loan principal amount, and the maximum repayment amount. The contract also has several functions that allow borrowers and lenders to interact with the contract, such as applyForLoan(), which allows borrowers to apply for a loan, and acceptLoan(), which allows lenders to accept a loan application and transfer money to the borrower. The contract also has several other functions that allow borrowers to repay their loans and lenders to liquidate a borrower's collateral if they default on their loan.
 
-Practicing good naming conventions for functions and components helps make the code readable, understandable and allows other experts to drop corrections and improvements where needed.
- 
-## What's next for Zinar NFT
-We will focus on scaling the Dapp, improving on the features, and adding new features based on users' needs.
+The react frontend helps users interact with their contract. To do this, it incorporates Ethers.js for interacting with the smart contracts and Moralis for connecting to user wallets and fetching user and contract details. The application also makes use of IPFS to store the NFT media and metadata

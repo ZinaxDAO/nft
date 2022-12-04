@@ -1,41 +1,20 @@
 import React, {useEffect, useState} from "react";
 import "./MyNfts.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import { useMoralisWeb3Api } from "react-moralis";
 import Slider from "react-slick";
+import { fetchNFTsForContract } from "../../../services/alchemy-sdk";
 
 const MyNfts = (props) => {
+  const [zinarNft, setZinarNft] = useState([]);
   const { setShowMyNfts } = props;
-  const Web3Api = useMoralisWeb3Api();
-  const [zinarnfts, setZinarnfts] = useState([]);
 
-  const fetchNFTsForContract = async () => {
-    const options = {
-      chain: "bsc testnet",
-      token_address: "0x0b2a3188bd937ea1f57d2f9a7d1859ea0c547798"
-    };
-    try{
-      const znfts = await Web3Api.Web3API.account.getNFTsForContract(options, { cors: true });
-      console.log(znfts);
-      if (znfts.result){
-        const convertMetadata = znfts.result.map((nft) => {
-          nft.metadata = JSON.parse(nft.metadata);
-          return nft.metadata;
-        });
-
-        console.log(convertMetadata);
-        
-        setZinarnfts(convertMetadata);
-        console.log(zinarnfts);
-      }
-
-    }catch(error){
-      console.log(error);
-    }
-  }
+  const getNfts = async () => {
+    const nftData = await fetchNFTsForContract();
+    setZinarNft(nftData);
+  };
 
   useEffect(() => {
-    fetchNFTsForContract();
+    getNfts();
   }, []);
 
   const settings = {
@@ -57,9 +36,14 @@ const MyNfts = (props) => {
       />
       <hr />
       <div className="nft-collections">
-        {zinarnfts ? (
-          zinarnfts.map((nft) => <div><video autoPlay loop src={nft.image} width={250} height={250}/></div>)
-          ) : (
+        {zinarNft ? 
+          zinarNft.map(nft => {
+            return(
+              <div key={nft.id}>
+                <video autoPlay loop src={nft.image} width={250} height={250}/>
+              </div>
+            )
+          }) : (
           <h3 className='dark:text-gray-400 mx-2'>
             No NFTs minted yet
           </h3>

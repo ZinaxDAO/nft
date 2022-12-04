@@ -1,0 +1,83 @@
+.mintModal {
+  text-align: center;
+}
+
+.mintModalTitle {
+  margin-bottom: 3rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.mintModalContent {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mintModalContent div img {
+  width: 80%;
+}
+
+.mintModalContent > div:nth-child(2) > div {
+  width: 15rem;
+  height: 2.5rem;
+  border-radius: 18px;
+  border: 1px solid #ff9900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.mintModalContent button {
+  width: 10rem;
+  height: 2.5rem;
+  background: linear-gradient(86.52deg, #ff9900 4%, #cb037b 83%);
+  border-radius: 25px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.modalInput {
+  background: transparent;
+  border: none;
+  text-align: center;
+  outline: none;
+  color: #fff;
+}
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+  .mintModalContent {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mintModalContent div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .mintModalContent > div:nth-child(2) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mintModalContent > div:nth-child(2) > div {
+    width: 80%;
+  }
+}

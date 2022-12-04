@@ -1,13 +1,14 @@
-import React from "react";
-import "./NftLoansModal.css";
+import React, {useEffect, useState} from "react";
 import "../NftModals/NftModals.css";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import nfts from "../../nfts/nfts";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { fetchNFTsForContract } from "../../../services/alchemy-sdk";
+import TakeLoanModalBox from "./NftLoansModalBox/TakeLoan";
 
 const NftLoansModal = (props) => {
+  const [zinarNft, setZinarNft] = useState([]);
   const { setNftLoansModal } = props;
 
   const settings = {
@@ -20,6 +21,15 @@ const NftLoansModal = (props) => {
     initialSlide: 0,
   };
 
+  const getNfts = async () => {
+    const nftData = await fetchNFTsForContract();
+    setZinarNft(nftData);
+  };
+
+  useEffect(() => {
+    getNfts();
+  }, []);
+
   return (
     <div className="modalBackground">
       <div className="modalContainer">
@@ -31,20 +41,13 @@ const NftLoansModal = (props) => {
         </div>
         <div className="modalContent">
           <Slider {...settings}>
-            {nfts.map((nft) => (
-              <div className="nftLoansModal">
-                <div className="nftLoansModalTitle">{nft.name}</div>
-                <div className="nftLoansModalContent">
-                  <div>{nft.image}</div>
-                  <div>
-                    <div>BUSD Balance</div>
-                    <div>Eligible NFT Balance</div>
-                    <div>Loaned Amount</div>
-                    <div>Accrued Interest</div>
-                    <button>Borrow Now</button>
-                  </div>
-                </div>
-              </div>
+            {zinarNft.map(nft => (
+              <TakeLoanModalBox
+                key={nft}
+                nftName={nft.name}
+                nftImage={nft.image}
+                nftId={nft.id}
+              />
             ))}
           </Slider>
         </div>

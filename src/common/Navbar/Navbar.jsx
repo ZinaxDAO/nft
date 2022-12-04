@@ -3,63 +3,24 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import ZinariLogo from "../../assets/images/zinarilogo.png";
 import ConnectImg from "../../assets/images/connectImg.png";
-import { useMoralis } from "react-moralis";
+import {
+  connectWallet,
+  checkIfWalletIsConnected,
+  switchNetwork,
+} from "../../services/authentication";
 
 const Navbar = () => {
-  const polygonChainId = "0x13881";
-  const { authenticate, isAuthenticated, isAuthenticating, authError, user, Moralis } = useMoralis();
-  
-  const [address, setAddress] = useState('');
-  const [chainId, setChainId] = useState('');
+  // const [chainId, setChainId] = useState("");
+  const [currentAccount, setCurrentAccount] = useState("");
+  const [network, setNetwork] = useState("");
 
   useEffect(() => {
-    getChainId();
-    if (isAuthenticated && chainId !== polygonChainId) {
-      switchNetworkMumbai();
-      setAddress(user.attributes.ethAddress);
+    checkIfWalletIsConnected(setCurrentAccount, setNetwork);
+    console.log("clicked");
+    if (network !== "Polygon Mumbai Testnet") {
+      switchNetwork();
     }
-  }, [isAuthenticated]);
-
-  const getChainId = async () => {
-    // await Moralis.enableWeb3();
-    const chainId = Moralis.getChainId();
-    console.log(chainId);
-    setChainId(chainId);
-  }
-
-  const switchNetworkMumbai = async () => {
-    const web3 = await Moralis.enableWeb3();
-    try {
-      await web3.currentProvider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x13881" }],
-      });
-    } catch (error) {
-      if (error.code === 4902) {
-        try {
-          await web3.currentProvider.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x13881",
-                chainName: "Mumbai",
-                rpcUrls: ["https://rpc-mumbai.matic.today"],
-                nativeCurrency: {
-                  name: "Matic",
-                  symbol: "Matic",
-                  decimals: 18,
-                },
-                blockExplorerUrls: ["https://explorer-mumbai.maticvigil.com"],
-              },
-            ],
-          });
-        } catch (error) {
-          alert(error.message);
-        }
-      }
-    }
-  }
-
+  }, [network]);
   const [open, setOpen] = useState(false);
   return (
     <header className="header">
@@ -88,15 +49,26 @@ const Navbar = () => {
               <Link to="/">Contact</Link>
             </li>
             <li className="nav-link">
-                <button className="nav-btn" onClick={() => authenticate()}>
-                  {isAuthenticated ? <p> {address.slice(0,4)}...{address.slice(-4)} </p> : <p>Connect</p>}
-                  <span>
-                    <img src={ConnectImg} alt="connect" />
-                  </span>
-                </button>
+              <button
+                className="nav-btn"
+                onClick={() => {
+                  connectWallet(setCurrentAccount);
+                }}
+              >
+                {currentAccount ? (
+                  <p>
+                    {" "}
+                    {currentAccount.slice(0, 4)}...{currentAccount.slice(-4)}{" "}
+                  </p>
+                ) : (
+                  <p>Connect</p>
+                )}
+                <span>
+                  <img src={ConnectImg} alt="connect" />
+                </span>
+              </button>
             </li>
           </ul>
-          
         </div>
 
         <div

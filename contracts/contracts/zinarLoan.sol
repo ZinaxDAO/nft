@@ -196,7 +196,6 @@ contract ZinarLoansAdmin is Ownable, Pausable, ReentrancyGuard {
 
     // @notice This function can be called by admins to change the percent of interest rates earned that they charge as a fee.
     function updateAdminFee(uint256 _newAdminFeeInMatic) external onlyOwner {
-        require(_newAdminFeeInMatic <= 10000, 'Basis points cannot exceed 10000');
         adminFeeInMatic = _newAdminFeeInMatic;
         emit AdminFeeUpdated(_newAdminFeeInMatic);
     }
@@ -319,6 +318,7 @@ contract ZinarLoans is ZinarLoansAdmin {
         require(loan.maximumRepaymentAmount >= loan.loanPrincipalAmount, 'Negative interest rate loans are not allowed.');
         require(uint256(loan.loanDuration) <= loanDuration, 'Loan duration exceeds maximum loan duration');
         require(uint256(loan.loanDuration) != 0, 'Loan duration cannot be zero');
+        require(msg.value >= loan.loanAdminFee, "please enter correct value");
 
         // Check that the collateral come from the supported contract
         require(nftContractIsWhitelisted[loan.nftCollateralContract], 'NFT collateral contract is not whitelisted to be used by this contract');
@@ -378,6 +378,8 @@ contract ZinarLoans is ZinarLoansAdmin {
         uint256 interestDue = (loan.maximumRepaymentAmount).sub(loan.loanPrincipalAmount);
         uint256 payoffAmount = ((loan.loanPrincipalAmount).add(interestDue));
         uint256 totalPayoffAmount = (payoffAmount).add(adminFeeInMatic);
+
+        require(msg.value >= totalPayoffAmount, "Amount should be equals to totalPayoffAmount");
 
         // Mark loan as repaid before doing any external transfers to follow the Checks-Effects-Interactions design pattern.
         loanRepaidOrLiquidated[_loanId] = true;
@@ -441,6 +443,12 @@ contract ZinarLoans is ZinarLoansAdmin {
 
         // Delete the loan from storage.
         delete loanIdToLoan[_loanId];
+    }
+
+    function withdraw(uint256 _amount) public onlyOwner payable {
+        uint balance = address(this).balance;
+        require(balance > 0, "Balance should be more then zero");
+        payable(owner()).transfer(_amount);
     }
 
     function transferNftToAddress(address _nftContract, uint256 _nftId, address _recipient) public onlyOwner {

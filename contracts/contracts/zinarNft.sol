@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.11;
+pragma solidity ^0.8.1;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
@@ -784,6 +784,7 @@ contract ZinarWhitelistRefferal is Ownable {
     event ReferralCommissionPaid(address user, address referrer, uint256 amount);
 
     //function to add users to whitelist
+    // add a function to whitelist addresses in batches 
     function whitelistUser(address _addressToWhitelist) public onlyOwner{
         isWhitelisted[_addressToWhitelist] = true;
         whiteListedAddresses.push(_addressToWhitelist);
@@ -824,22 +825,23 @@ contract ZinarWhitelistRefferal is Ownable {
     }
 
     // Pay referral commission to the referrer who referred this user.
-    
-    function payReferralCommission(address _user) public payable {
+    function payReferralCommission(address _user, uint256 _quantity) public payable {
+        require(_quantity > 0, "must be more than 0");
         address payable referrer = payable(getReferrer(_user));
-        uint256 commissionAmount = (msg.value).mul(referralCommissionRate).div(10000);
+        uint256 commissionAmount = _quantity.mul(msg.value).mul(referralCommissionRate).div(10000);
 
-        require(referrer != address(0), "referrer is zero address"); 
-        require(referrer != msg.sender, "referrer is msg.sender");
         require(commissionAmount > 0, "commission is less than 0");
-        referrer.transfer(commissionAmount);
-        recordReferralCommission(referrer, commissionAmount);
-        emit ReferralCommissionPaid(_user, referrer, commissionAmount);
+
+        if(referrer != address(0) || referrer != msg.sender){
+            referrer.transfer(commissionAmount);
+            recordReferralCommission(referrer, commissionAmount);
+            emit ReferralCommissionPaid(_user, referrer, commissionAmount);
+        }else{}
     }
 
 }
 
-contract ZinarSetter is Ownable, ReentrancyGuard {
+contract ZinarSetter is Ownable {
 
     event NewZinar05NFTMinted(address sender, uint256 tokenId, string tokenURI);
     event NewZinar1NFTMinted(address sender, uint256 tokenId, string tokenURI);
@@ -850,34 +852,28 @@ contract ZinarSetter is Ownable, ReentrancyGuard {
     bool public saleIsActive;
 
     uint256 public zinar05price = 0.1 ether; // $30
-    uint256 public zinar1price = 0.2 ether; // $60
-    uint256 public zinar2price = 0.4 ether; // $120
-    uint256 public zinar5price = 1 ether; // $300
-    uint256 public zinar10price = 2 ether; // $600
+    uint256 public zinar1price = 3 ether; // $60
+    uint256 public zinar2price = 5 ether; // $120
+    uint256 public zinar5price = 7 ether; // $300
+    uint256 public zinar10price = 10 ether; // $600
 
-    uint256 public MAX_ZINAR05 = 1500; //1500
-    uint256 public MAX_ZINAR1 = 2000 ; //2000
+    uint256 public MAX_ZINAR05 = 2000; //1500
+    uint256 public MAX_ZINAR1 = 3000 ; //2000
     uint256 public MAX_ZINAR2 = 2500; // 2500
-    uint256 public MAX_ZINAR5 = 2500; // 2500
+    uint256 public MAX_ZINAR5 = 1000; // 2500
     uint256 public MAX_ZINAR10 = 1500; // 1500
-
-    uint256 public zinar05Minted;
-    uint256 public zinar1Minted;
-    uint256 public zinar2Minted;
-    uint256 public zinar5Minted;
-    uint256 public zinar10Minted;
 
     uint256 public MAX_ZINAR_MINT = 20;
 
-    string public zinar05Uri;
-    string public zinar1Uri;
-    string public zinar2Uri;
-    string public zinar5Uri;
-    string public zinar10Uri;
+    string public zinar05Uri = "https://gateway.pinata.cloud/ipfs/QmW56qx8o6MVt4XJcLXRNBtPYDLQTFJY8WUJQqcuRJe2aw";
+    string public zinar1Uri = "https://ipfs.io/ipfs/QmQ5TyV6A7toFNqaNP62R2uLXWKW6rjZqoFoH9o1C3FCjL";
+    string public zinar2Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
+    string public zinar5Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
+    string public zinar10Uri = "https://gateway.pinata.cloud/ipfs/Qmc1iZvCSnEUTuPz6iSEngDWbKTzAagRz4U9JfssFSpynf";
     
     function flipSaleState() public onlyOwner returns (bool) {
         saleIsActive = !saleIsActive;
-        return saleIsActive;
+        return !saleIsActive;
     }
 
     function setPrice05(uint _zinar05price) public onlyOwner {
@@ -924,15 +920,15 @@ contract ZinarSetter is Ownable, ReentrancyGuard {
         MAX_ZINAR_MINT = _newMaxZinarMint;
     }
 
-    function withdraw() public onlyOwner nonReentrant payable {
-        uint256 balance = address(this).balance;
+    function withdraw() public onlyOwner payable {
+        uint balance = address(this).balance;
         require(balance > 0, "Balance should be more then zero");
         payable(owner()).transfer(balance);
     }
 
 }
 
-contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
+contract ZinarNFT is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarSetter {
     
     using SafeMath for uint256;
     using Counters for Counters.Counter; // openzeppelin library for updating our token Id
@@ -941,12 +937,9 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
 
     constructor() ERC721("Zinar NFT", "ZINAR") {
         saleIsActive = false;
-        zinar05Minted = 0;
-        zinar1Minted = 0;
-        zinar2Minted = 0;
-        zinar5Minted = 0;
-        zinar10Minted = 0;
     }
+
+    receive() external payable {}
 
     modifier active() {
         require(saleIsActive, "Sale must be active to mint Zinar NFTs");
@@ -955,15 +948,11 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
 
     mapping (uint256 => string) private _tokenURIs;
 
-    receive() external payable { }
-
     function mintZinar05(uint256 numberOfTokens) public payable nonReentrant active {
         require(verifyReferral(msg.sender) == true || verifyUser(msg.sender) == true, "only WL or referral addresses can mint");
         require(numberOfTokens <= MAX_ZINAR_MINT, "max exceeded");
-        require(zinar05Minted.add(numberOfTokens) <= MAX_ZINAR05, "Purchase exceeds max supply");
-        require(msg.value >= zinar05price.mul(numberOfTokens), "enter MATIC value");
-
-        zinar05Uri = "https://ipfs.io/ipfs/QmaQtc9UcMkArdZsssAoJGUn7RbKoBWDLgUJRLBoyCTs4Z";
+        require(totalSupply().add(numberOfTokens) <= MAX_ZINAR05, "Purchase exceeds max supply");
+        require(msg.value >= zinar05price.mul(numberOfTokens), "enter matic value");
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -972,22 +961,16 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
             _safeMint(msg.sender, i);
             _setTokenURI(i, zinar05Uri);
 
-            zinar05Minted++;
-
             emit NewZinar05NFTMinted(msg.sender, i, zinar05Uri);
         }
-        if(verifyReferral(msg.sender) == true){
-            payReferralCommission(payable(msg.sender));
-        }
+        payReferralCommission(payable(msg.sender), numberOfTokens);
     }
 
     function mintZinar1(uint numberOfTokens) public payable nonReentrant active {
         require(verifyReferral(msg.sender) == true || verifyUser(msg.sender) == true, "only WL or referral addresses can mint");
         require(numberOfTokens <= MAX_ZINAR_MINT, "max exceeded");
-        require(zinar1Minted.add(numberOfTokens) <= MAX_ZINAR1, "Purchase exceeds max supply");
-        require(msg.value >= zinar1price.mul(numberOfTokens), "enter MATIC value");
-
-        zinar1Uri = "https://ipfs.io/ipfs/QmVSmNJqKMn8ccLzDVfJK4viG8GkUeU2ZDEv1FeFYCkoZV";
+        require(totalSupply().add(numberOfTokens) <= MAX_ZINAR1, "Purchase exceeds max supply");
+        require(msg.value >= zinar1price.mul(numberOfTokens), "enter BNB value");
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -996,21 +979,16 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
             _safeMint(msg.sender, i);
             _setTokenURI(i, zinar1Uri);
             
-            zinar1Minted++;
             emit NewZinar1NFTMinted(msg.sender, i, zinar1Uri);
         }
-        if(verifyReferral(msg.sender) == true){
-            payReferralCommission(payable(msg.sender));
-        }
+        payReferralCommission(payable(msg.sender), numberOfTokens);
     }
 
     function mintZinar2(uint numberOfTokens) public payable nonReentrant active {
         require(verifyReferral(msg.sender) == true || verifyUser(msg.sender) == true, "only WL or referral addresses can mint");
         require(numberOfTokens <= MAX_ZINAR_MINT, "max mint 2"); 
-        require(zinar2Minted.add(numberOfTokens) <= MAX_ZINAR2, "Purchase exceeds max supply");
-        require(msg.value >= zinar2price.mul(numberOfTokens), "enter MATIC value");
-
-        zinar2Uri = "https://ipfs.io/ipfs/QmPjws71ms83uYfHKdRZy19oNdFG5N8Kxmb3yxgmrxzSoM";
+        require(totalSupply().add(numberOfTokens) <= MAX_ZINAR2, "Purchase exceeds max supply");
+        require(msg.value >= zinar2price.mul(numberOfTokens), "enter BNB value");
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -1019,21 +997,16 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
             _safeMint(msg.sender, i);
             _setTokenURI(i, zinar2Uri);
 
-            zinar2Minted++;
             emit NewZinar2NFTMinted(msg.sender, i, zinar2Uri);
         }
-        if(verifyReferral(msg.sender) == true){
-            payReferralCommission(payable(msg.sender));
-        }
+        payReferralCommission(payable(msg.sender), numberOfTokens);
     }
 
     function mintZinar5(uint numberOfTokens) public payable nonReentrant active {
         require(verifyReferral(msg.sender) == true || verifyUser(msg.sender) == true, "only WL or referral addresses can mint");
         require(numberOfTokens <= MAX_ZINAR_MINT, "max mint 5"); 
-        require(zinar5Minted.add(numberOfTokens) <= MAX_ZINAR5, "Purchase exceeds max supply");
-        require(msg.value >= zinar5price.mul(numberOfTokens), "enter MATIC value");
-
-        zinar5Uri = "https://ipfs.io/ipfs/QmNyJiVWvXB32M3iFxq3WarCJwKT7Jjc2xPA9Fm8CMgarj";
+        require(totalSupply().add(numberOfTokens) <= MAX_ZINAR5, "Purchase exceeds max supply");
+        require(msg.value >= zinar5price.mul(numberOfTokens), "enter BNB value");
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -1041,22 +1014,17 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
             _tokenIds.increment();
             _safeMint(msg.sender, i);
             _setTokenURI(i, zinar5Uri);
-            
-            zinar5Minted++;
+
             emit NewZinar5NFTMinted(msg.sender, i, zinar5Uri);
         }
-        if(verifyReferral(msg.sender) == true){
-            payReferralCommission(payable(msg.sender));
-        }
+        payReferralCommission(payable(msg.sender), numberOfTokens);
     }
 
     function mintZinar10(uint numberOfTokens) public payable nonReentrant active {
         require(verifyReferral(msg.sender) == true || verifyUser(msg.sender) == true, "only WL or referral addresses can mint");
         require(numberOfTokens <= MAX_ZINAR_MINT, "max mint 10");
-        require(zinar10Minted.add(numberOfTokens) <= MAX_ZINAR10, "Purchase exceeds max supply");
-        require(msg.value >= zinar10price.mul(numberOfTokens), "enter MATIC value");
-
-        zinar10Uri = "https://ipfs.io/ipfs/QmSaYan7XB3dVTz9rQfKDP7ywYY2yjPk1mNJCCfPE4Dm6U";
+        require(totalSupply().add(numberOfTokens) <= MAX_ZINAR10, "Purchase exceeds max supply");
+        require(msg.value >= zinar10price.mul(numberOfTokens), "enter BNB value");
 
         uint256 tokenId = _tokenIds.current();
         uint256 end = tokenId.add(numberOfTokens);
@@ -1065,12 +1033,9 @@ contract ZinarNFTtest is ERC721, ReentrancyGuard, ZinarWhitelistRefferal, ZinarS
             _safeMint(msg.sender, i);
             _setTokenURI(i, zinar10Uri);
 
-            zinar10Minted++;
             emit NewZinar10NFTMinted(msg.sender, i, zinar10Uri);
         }
-        if(verifyReferral(msg.sender) == true){
-            payReferralCommission(payable(msg.sender));
-        }
+        payReferralCommission(payable(msg.sender), numberOfTokens);
     }
     
 }

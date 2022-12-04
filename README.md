@@ -10,6 +10,7 @@ The Zinar NFT is built using
 - IPFS to save and retrieve the token URI 
 
 ## The Use of the Product
+Zinar NFTs are asset-backed NFTs which can be minted and staked to earn tokens or used as collateral for crypto loans.
 The need to create better use cases for NFTs in the DeFi ecosystem and web3 in general. The Zinar NFT is the first step to bring users closer to NFTs in DeFi in the Zinari ecosystem. We will continue to grow the project and introduce more use cases as we expand.
 
 - Mint Zinar NFTs

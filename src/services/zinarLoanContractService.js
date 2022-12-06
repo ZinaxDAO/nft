@@ -81,7 +81,9 @@ const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
         nftId, 
         InterestRate, 
         NFT_CONTRACT_ADDRESS,
-        {value: getAdminFee()}
+        {value: getAdminFee(),
+          gasPrice: 2000000000        
+        }
       );
       const receipt = await takeLoan.wait();
   

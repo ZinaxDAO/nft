@@ -1,0 +1,76 @@
+.referFriendModal{
+    text-align: center;
+}
+
+.referFriendModalTitle{
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.referFriendModalContent{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.referFriendModalContent div img{
+    width: 80%;
+}
+
+.referFriendModalContent>div:nth-child(2)>div{
+    width: 15rem;
+    height: 2.5rem;
+    border-radius: 18px;
+    border: 1px solid #FF9900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
+.referFriendModalContent button{
+    width: 10rem;
+    height: 2.5rem;
+    background: #6CBA74;
+    border-radius: 22px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+
+/**********************************/
+/***** Responsive Layout **********/
+/**********************************/
+@media screen and (max-width: 450px) {
+    .referFriendModalContent{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .referFriendModalContent div:first-child{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .referFriendModalContent>div:nth-child(2){
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .referFriendModalContent>div:nth-child(2)>div{
+        width: 80%;
+    }
+}

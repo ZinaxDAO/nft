@@ -6,16 +6,6 @@ function RepayLoanModalBox(props) {
   const [nftId, setNftId] = useState();
   const [repayAmount, setRepayAmount] = useState();
 
-  const setPayOffAmount = async(_nftId) => {
-    try {
-      const payOffAmount = await getPayOffAmount(_nftId);
-      const receipt = payOffAmount.wait();
-      return receipt;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <div className="repayLoansModal">
       <div className="repayLoansModalTitle">Repay {props.nftName} Loan</div>
@@ -29,22 +19,17 @@ function RepayLoanModalBox(props) {
                 type="text"
                 value={nftId}
                 placeholder="NFT ID"
-                onChange={(e) => {
+                onChange={ async(e) => {
                   setNftId(e.target.value);
-                  const payOffAmount = setPayOffAmount(e.target.value);
+                  const payOffAmount = await getPayOffAmount(e.target.value);
+                  console.log(payOffAmount);
                   setRepayAmount(payOffAmount);
                 }}
               />
           </div>
           <div>Loaned Amount: </div>
           <div>
-            <input
-              className="modalInput"
-              type="text"
-              value={repayAmount}
-              placeholder="Repay Amount"
-              onChange={(e) => setRepayAmount(e.target.value)}
-            />
+            {repayAmount ? <h3>{repayAmount}</h3> : <h3>0</h3>}
           </div>
           <button onClick={()=> paybackZinarLoan(nftId)}>Repay Loan</button>
         </div>

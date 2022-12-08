@@ -82,7 +82,7 @@ const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
         InterestRate, 
         NFT_CONTRACT_ADDRESS,
         {value: getAdminFee(),
-          gasPrice: 2000000000        
+          gasPrice: 2000000000
         }
       );
       const receipt = await takeLoan.wait();
@@ -101,27 +101,32 @@ const takeZinarLoan = async(loanAmount, nftId, InterestRate) => {
   }
 }
 
-const getPayOffAmount = async (loanId) => {
+const getPayOffAmount = async(loanId) => {
   try {
-    const payOffAmount = await contract.getPayoffAmount(loanId);
-    const receipt = await payOffAmount.wait();
+    const payOffAmountHex = await contract.getPayoffAmount(loanId);
+    const payOffAmountBigN = parseInt(payOffAmountHex._hex, 16);
+    const payOffAmountString = payOffAmountBigN.toString();
+    const payOffAmountParse = ethers.utils.formatEther(payOffAmountString);
 
-    if (receipt.status === 1) {
-      return payOffAmount.toString();
-    } else {}
+    console.log(payOffAmountParse);
+    return payOffAmountString;
   } catch (error) {
     console.log(error)
   }  
 }
 
 const paybackZinarLoan = async(loanId) => {
-  const totalAmount = getPayOffAmount(loanId) + getAdminFee();
+  const amountDue = await getPayOffAmount(loanId);
+  const adminFee =await getAdminFee();
+
+  const totalAmount = parseInt(amountDue) + parseInt(adminFee);
   console.log (totalAmount);
+  const totalAmountString = totalAmount.toString();
   console.log('Accessing wallet to pay gas');
   
   const payLoan = await contract.payBackLoan(
     loanId,
-    {value: totalAmount}
+    {value: totalAmountString}
   );
   const receipt = await payLoan.wait();
 

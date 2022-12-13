@@ -1,3 +1,10 @@
+.modalInput{
+    width: 25rem;
+    height: 2.5rem;
+    border-radius: 18px;
+    border: 1px solid #FF9900;
+}
+
 .referFriendModal{
     text-align: center;
 }
@@ -13,6 +20,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-top: 5rem;
 }
 
 .referFriendModalContent div img{

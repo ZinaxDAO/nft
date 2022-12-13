@@ -70,4 +70,19 @@ const setLoanPrincipal = async(name) => {
     return loanPrincipalString;
 }
 
-export {getMintPrice, setLoanPrincipal};
+const referFriend = async(refAddress) => {
+    try {
+        console.log("accessing wallet to pay gas");
+        const referNewUser = await contract.recordReferral(refAddress);
+        const referralReceipt = await referNewUser.wait();
+        if (referralReceipt.status == 1) {
+            alert("Transaction Successful");
+        } else {
+            alert("Transaction Failed")
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export {getMintPrice, setLoanPrincipal, referFriend};

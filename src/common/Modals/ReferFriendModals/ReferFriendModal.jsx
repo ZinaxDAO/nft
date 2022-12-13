@@ -1,6 +1,7 @@
 import './ReferFriendModal.css';
 import { useState } from "react";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import { referFriend } from '../../../services/mintNftContractService';
 
 function ReferFriendModal(props) {
   const { setReferFriendModal } = props;
@@ -25,13 +26,13 @@ function ReferFriendModal(props) {
                     className="modalInput"
                     type="text"
                     value={referralAddress}
-                    placeholder="NFT ID"
+                    placeholder="Referral Address"
                     onChange={ async(e) => {
                       setReferralAddress(e.target.value);
                     }}
                   />
                 </div>
-                <button>Refer Friend</button>
+                <button onClick={() => referFriend(referralAddress)}>Refer Friend</button>
               </div>
             </div>
           </div>

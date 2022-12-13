@@ -5,12 +5,14 @@ import MintModal from "../../../common/Modals/MintModals/MintModal";
 import RepayLoansModal from "../../../common/Modals/RepayLoansModals/RepayLoansModal";
 import MyNfts from "../../../common/Modals/MyNfts/MyNfts";
 import NftLoansModal from "../../../common/Modals/NftLoansModals/NftLoansModal";
+import ReferFriendModal from "../../../common/Modals/ReferFriendModals/ReferFriendModal";
 
 const DashboardMenu = () => {
   const [showMyNfts, setShowMyNfts] = useState(false);
   const [nftLoansModal, setNftLoansModal] = useState(false);
   const [mintModal, setMintModal] = useState(false);
   const [repayLoansModal, setRepayLoansModal] = useState(false);
+  const [referFriendModal, setReferFriendModal] = useState(false);
 
   return (
     <React.Fragment>
@@ -52,7 +54,7 @@ const DashboardMenu = () => {
             </div>
           </div>
 
-          <div>
+          <div onClick={() => setReferFriendModal(true)}>
             <p className="refer-friend-p">refer friend</p>
             <div>
               <img src={Star} alt="star" className="star-image" />
@@ -66,6 +68,7 @@ const DashboardMenu = () => {
       {mintModal && <MintModal setMintModal={setMintModal} />}
       {nftLoansModal && <NftLoansModal setNftLoansModal={setNftLoansModal} />}
       {repayLoansModal && (<RepayLoansModal setRepayLoansModal={setRepayLoansModal} />)}
+      {referFriendModal && <ReferFriendModal setReferFriendModal={setReferFriendModal} />}
     </React.Fragment>
   );
 };

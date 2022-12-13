@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import chooseNft from "../../helper/chooseNfts";
 import "./Usecases.css";
 // import NFTOne from "../../assets/images/nft1.png";
 import Slider from "react-slick";
@@ -13,6 +14,8 @@ import nfts from "../../common/nfts/nfts";
 
 const Usecases = () => {
   const [display, setDisplay] = useState(0);
+
+  const quantity = "1";
 
   const nftImages = [
     <img src={NftOne} alt="nft-one" />,
@@ -44,6 +47,14 @@ const Usecases = () => {
     ],
   };
 
+  const mintZinarNft = async (nftName, nftPrice) => {
+    try {
+      await chooseNft(nftName, quantity, nftPrice);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="usecases" id="mint">
       <div className="usecases-intro">
@@ -67,7 +78,7 @@ const Usecases = () => {
               <p>{nfts[display].loanAmount}</p>
             </div>
             <div>
-              <p>Stacking Multiplier:</p>
+              <p>Staking Multiplier:</p>
               <p>{nfts[display].multiplier}</p>
             </div>
             <div>
@@ -83,7 +94,7 @@ const Usecases = () => {
               <p>{nfts[display].penalty}</p>
             </div>
 
-            <button className="usecase-btn">Mint Now</button>
+            <button className="usecase-btn" onClick={() => mintZinarNft(nfts[display].name, nfts[display].price)}>Mint Now</button>
           </div>
           <div className="nft-image">{nftImages[display]}</div>
         </div>
@@ -97,7 +108,7 @@ const Usecases = () => {
               <p>{nfts[0].loanAmount}</p>
             </div>
             <div>
-              <p>Stacking Multiplier:</p>
+              <p>Staking Multiplier:</p>
               <p>{nfts[0].multiplier}</p>
             </div>
             <div>
@@ -113,7 +124,7 @@ const Usecases = () => {
               <p>{nfts[0].penalty}</p>
             </div>
 
-            <button className="usecase-btn">Mint Now</button>
+            <button className="usecase-btn" onClick={() => mintZinarNft(nfts[0].name, nfts[0].price)}>Mint Now</button>
           </div>
           <div className="nft-image">
             <img src={NftOne} alt="nft-one" />

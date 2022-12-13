@@ -2,6 +2,7 @@ import './ReferFriendModal.css';
 import { useState } from "react";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { referFriend } from '../../../services/mintNftContractService';
+import referaFriend from '../../../assets/images/refer-a-friend.png';
 
 function ReferFriendModal(props) {
   const { setReferFriendModal } = props;
@@ -21,12 +22,15 @@ function ReferFriendModal(props) {
             <div className="referFriendModalTitle">Refer & Earn</div>
             <div className="referFriendModalContent">
               <div>
+                <img src={referaFriend} alt="refer a friend image" />
+              </div>
+              <div>
                 <div>
                   <input
                     className="modalInput"
                     type="text"
                     value={referralAddress}
-                    placeholder="Referral Address"
+                    placeholder="Enter Referral Address"
                     onChange={ async(e) => {
                       setReferralAddress(e.target.value);
                     }}

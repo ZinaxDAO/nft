@@ -18,7 +18,7 @@ function RepayLoanModalBox(props) {
                 className="modalInput"
                 type="text"
                 value={nftId}
-                placeholder="NFT ID"
+                placeholder="Enter NFT ID"
                 onChange={ async(e) => {
                   setNftId(e.target.value);
                   const payOffAmount = await getPayOffAmount(e.target.value);

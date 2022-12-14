@@ -1,6 +1,5 @@
 import { ethers } from "ethers";
 import contractABI from "../utils/ZinarNFTtest.json";
-import { SuccessAlerts, FailedAlerts } from "../utils/alerts";
 
 const CONTRACT_ADDRESS = "0x161ed8dc509bdae1b7faaad5b48269bc7c283c05";
 
@@ -26,9 +25,11 @@ const chooseNft = async (nftName, quantity, totalPrice) => {
       console.log(receipt);
       // if the contract is mined successfully, do the following:
       if (receipt.status === 1) {
-        SuccessAlerts();
+        alert(
+          "Zinar NFT minted! https://mumbai.polygonscan.com/tx/" + mintTx.hash
+        );
       } else {
-        FailedAlerts();
+        alert("Transaction failed! Please try again");
       }
     } catch (error) {
       console.log(error);

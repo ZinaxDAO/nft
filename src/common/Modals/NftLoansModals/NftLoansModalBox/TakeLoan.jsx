@@ -19,10 +19,10 @@ function TakeLoanModalBox(props) {
           <video autoPlay loop src={props.nftImage} width={250} height={250}/>
         </div>
         <div>
-          <div>BUSD Balance: </div>
+          <div>MATIC Balance: </div>
           <div>NFT ID: {props.nftId}</div>
-          <div>Loaned Amount: </div>
-          <div>Accrued Interest</div>
+          <div>Loan Amount: </div>
+          
           <button onClick={beginLoan}>Borrow Now</button>
         </div>
       </div>

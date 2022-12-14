@@ -8,6 +8,7 @@ import DiamondThree from "../../assets/images/diamond-three.png";
 import CubesFour from "../../assets/images/cubes-four.png";
 import TwitterImg from "../../assets/images/twitter.png";
 import TelegramImg from "../../assets/images/telegram.png";
+import GithubImg from "../../assets/images/github.png";
 
 const Team = () => {
   const [member, setMember] = useState(true);
@@ -29,10 +30,10 @@ const Team = () => {
             <div className="about-member one">
               <p>Business Development</p>
               <div className="member-links">
-                <a href="/">
+                <a href="https://twitter.com/MikaelCBernard" target= "_blank" rel="noreferrer">
                   <img src={TwitterImg} alt="twitter handle" />
                 </a>
-                <a href="/">
+                <a href="https://t.me/zinarisupport" target= "_blank" rel="noreferrer">
                   <img src={TelegramImg} alt="telegram handle" />
                 </a>
               </div>
@@ -51,11 +52,11 @@ const Team = () => {
             <div className="about-member two">
               <p>Technical Lead(Blockchain)</p>
               <div className="member-links">
-                <a href="/">
+                <a href="https://twitter.com/Alpha_godhand" target= "_blank" rel="noreferrer">
                   <img src={TwitterImg} alt="twitter handle" />
                 </a>
-                <a href="/">
-                  <img src={TelegramImg} alt="telegram handle" />
+                <a href="https://github.com/Akay74" target= "_blank" rel="noreferrer">
+                  <img src={GithubImg} alt="telegram handle" />
                 </a>
               </div>
             </div>
@@ -72,11 +73,11 @@ const Team = () => {
             <div className="about-member three">
               <p>Front End Engineer</p>
               <div className="member-links">
-                <a href="/">
+                <a href="https://twitter.com/SuccessSoi1" target= "_blank" rel="noreferrer">
                   <img src={TwitterImg} alt="twitter handle" />
                 </a>
-                <a href="/">
-                  <img src={TelegramImg} alt="telegram handle" />
+                <a href="https://github.com/Generalsoi" target= "_blank" rel="noreferrer">
+                  <img src={GithubImg} alt="telegram handle" />
                 </a>
               </div>
             </div>
@@ -93,11 +94,11 @@ const Team = () => {
             <div className="about-member four">
               <p>Chief Design Officer</p>
               <div className="member-links">
-                <a href="/">
+                <a href="https://twitter.com/Sir_Uddy" target= "_blank" rel="noreferrer">
                   <img src={TwitterImg} alt="twitter handle" />
                 </a>
-                <a href="/">
-                  <img src={TelegramImg} alt="telegram handle" />
+                <a href="https://github.com/codewithuddy" target= "_blank" rel="noreferrer">
+                  <img src={GithubImg} alt="telegram handle" />
                 </a>
               </div>
             </div>

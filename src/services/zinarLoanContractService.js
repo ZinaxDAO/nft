@@ -138,4 +138,12 @@ const paybackZinarLoan = async(loanId) => {
   }
 }
 
-export {getInterestRate, setIntRate, getAdminFee, takeZinarLoan, getPayOffAmount, paybackZinarLoan};
+const getNftLoanDetails = async(nftId) => {
+  const nftLoanStruct = await contract.nftIdToLoan(nftId);
+  const structReceipt = await nftLoanStruct.wait();
+  
+  console.log(structReceipt);
+  return nftLoanStruct;
+}
+
+export {getInterestRate, setIntRate, getAdminFee, takeZinarLoan, getPayOffAmount, paybackZinarLoan, getNftLoanDetails};
